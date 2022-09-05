@@ -239,3 +239,4 @@ Route::post('/trans-service-general-approval/process-revision', [TransServiceGen
 Route::get('/trans-service-general-approval/revision/{service_general_id}', [TransServiceGeneralApprovalController::class, 'revisionTransServiceGeneralApproval'])->name('revision-service-general-approval');
 Route::post('/trans-service-general-approval/approve', [TransServiceGeneralApprovalController::class, 'processApproveTransServiceGeneralApproval'])->name('approve-service-general-approval');
 Route::post('/trans-service-general-approval/disapprove', [TransServiceGeneralApprovalController::class, 'processDisapproveTransServiceGeneralApproval'])->name('disapprove-service-general-approval');
+// Route::get('/trans-service-general-approval/revision/{service_general_id}', [TransServiceGeneralApprovalController::class, 'revisionTransServiceGeneralApproval'])->name('revision-service-general-approval');
