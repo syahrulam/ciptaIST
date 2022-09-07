@@ -85,7 +85,7 @@ Route::post('/service/process-edit-parameter-array', [CoreServiceController::cla
 Route::get('/service/delete-edit-parameter-array/{record_id}/{service_id}', [CoreServiceController::class, 'deleteEditArrayCoreServiceParameter'])->name('delete-edit-parameter-array-service');
 Route::post('/service/process-edit-service', [CoreServiceController::class, 'processEditCoreService'])->name('process-edit-service');
 
-Route::get('/trans-service-requisition', [TransServiceRequisitionController::class, 'index'])->name('service-requisition');
+Route::get('/ist', [TransServiceRequisitionController::class, 'index'])->name('ist');
 Route::get('/trans-service-requisition/reset/{service_id}', [TransServiceRequisitionController::class, 'addReset'])->name('add-reset-service-requisition');
 Route::get('/trans-service-requisition/search', [TransServiceRequisitionController::class, 'search'])->name('search-service-requisition');
 Route::post('/trans-service-requisition/filter', [TransServiceRequisitionController::class, 'filter'])->name('filter-service-requisition');
@@ -101,7 +101,8 @@ Route::post('/trans-service-requisition/process-document-requisition', [TransSer
 Route::get('/trans-service-requisition/download-term/{id1}/{id2}', [TransServiceRequisitionController::class, 'downloadTransServiceRequisitionTerm'])->name('download-term-service-requisition');
 Route::get('/trans-service-requisition/print/{service_requisition_id}', [TransServiceRequisitionController::class, 'print'])->name('print-service-requisition');
 
-Route::get('/trans-service-disposition', [TransServiceDispositionController::class, 'index'])->name('service-disposition');
+Route::get('/istilah-ist', [TransServiceDispositionController::class, 'index'])->name('istilah-ist');
+// Route::get('/trans-service-disposition/addnormaist', [TransServiceDispositionController::class, 'addnormaist'])->name('search-service-disposition');
 Route::get('/trans-service-disposition/search', [TransServiceDispositionController::class, 'search'])->name('search-service-disposition');
 Route::post('/trans-service-disposition/filter', [TransServiceDispositionController::class, 'filter'])->name('filter-service-disposition');
 Route::get('/trans-service-disposition/add/{service_requisition_id}', [TransServiceDispositionController::class, 'addTransServiceDisposition'])->name('add-service-disposition');
@@ -114,7 +115,7 @@ Route::post('/trans-service-disposition/process-document-requisition-edit', [Tra
 Route::get('/trans-service-disposition/reset-add', [TransServiceDispositionController::class, 'addReset'])->name('add-reset-trans-service-disposition');
 Route::get('/trans-service-disposition/download-term/{id1}/{id2}', [TransServiceDispositionController::class, 'downloadTransServiceDispositionTerm'])->name('download-term-service-disposition');
 
-Route::get('/trans-service-disposition-approval', [TransServiceDispositionApprovalController::class, 'index'])->name('service-disposition-approval');
+Route::get('/istilah-ge', [TransServiceDispositionApprovalController::class, 'index'])->name('istilah-ge');
 Route::get('/trans-service-disposition-approval/search', [TransServiceDispositionApprovalController::class, 'search'])->name('search-service-disposition-approval');
 Route::post('/trans-service-disposition-approval/filter', [TransServiceDispositionApprovalController::class, 'filter'])->name('filter-service-disposition-approval');
 Route::get('/trans-service-disposition-approval/add/{service_requisition_id}', [TransServiceDispositionApprovalController::class, 'addTransServiceDispositionApproval'])->name('add-service-disposition-approval');
@@ -131,7 +132,9 @@ Route::get('/trans-service-disposition-approval/download-term/{id1}/{id2}', [Tra
 Route::post('/trans-service-disposition-approval/process-disapprove', [TransServiceDispositionApprovalController::class, 'processDisapproveTransServiceDispositionApproval'])->name('process-disapprove-service-disposition-approval');
 Route::get('/trans-service-disposition-approval/process-funds-received/{id}', [TransServiceDispositionApprovalController::class, 'processFundsReceived'])->name('process-funds-received-service-disposition-approval');
 
-Route::get('/trans-service-disposition-review', [TransServiceDispositionReviewController::class, 'index'])->name('service-disposition-review');
+Route::get('/gesamt', [TransServiceDispositionReviewController::class, 'index'])->name('gesamt');
+
+Route::get('/istilah-iq', [TransServiceDispositionReviewController::class, 'index'])->name('istilah-iq');
 Route::get('/trans-service-disposition-review/search', [TransServiceDispositionReviewController::class, 'search'])->name('search-service-disposition-review');
 Route::post('/trans-service-disposition-review/filter', [TransServiceDispositionReviewController::class, 'filter'])->name('filter-service-disposition-review');
 Route::get('/trans-service-disposition-review/add/{service_requisition_id}', [TransServiceDispositionReviewController::class, 'addTransServiceDispositionReview'])->name('add-service-disposition-review');
@@ -191,8 +194,10 @@ Route::get('/dashboard-review/tracking', [DashboardReviewController::class, 'tra
 Route::post('/dashboard-review/search', [DashboardReviewController::class, 'search'])->name('search-dashboard-review');
 
 
-Route::get('/scan-qr', [ScanQRController::class, 'index'])->name('scan-qr');
-Route::get('/scan-qr/reload', [ScanQRController::class, 'reloadAPI'])->name('reload-scan-qr');
+Route::get('/data-tes', [ScanQRController::class, 'index'])->name('data-tes');
+Route::get('/hasil-data-tes', [ScanQRController::class, 'showdatatest'])->name('hasil-data-tes');
+Route::get('/tes-ist', [ScanQRController::class, 'reloadAPI'])->name('tes-ist');
+Route::get('/peserta-tes-ist', [ScanQRController::class, 'reloadAPI'])->name('peserta-tes-ist');
 
 
 Route::get('/tracking', [TrackingController::class, 'index'])->name('tracking');
