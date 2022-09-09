@@ -56,7 +56,8 @@ Dashboard
                     ?>
                                 <li class="list-group-item main-menu-item" onClick="location.href='{{ route('gesamt') }}'">
                                     <i class="fa fa-angle-right"></i>
-                                    GESAMT</li>
+                                    GESAMT
+                                </li>
                                 <?php  
                             }     
                         } 
@@ -117,32 +118,30 @@ Dashboard
                         if($menu['id_menu']==32){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('service-general') }}'"> <i
-                                        class="fa fa-angle-right"></i> Pertanyaan</li>
+                                    onClick="location.href='{{ route('pertanyaan') }}'"> <i class="fa fa-angle-right"></i>
+                                    Pertanyaan</li>
                                 <?php   }
                         if($menu['id_menu']==33){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('service-general-approval') }}'"> <i
+                                    onClick="location.href='{{ route('kategori-ujian') }}'"> <i
                                         class="fa fa-angle-right"></i> Kategori Ujian</li>
                                 <?php   }
                         if($menu['id_menu']==32){
                     ?>
-                                <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('service-general-approval') }}'"> <i
-                                        class="fa fa-angle-right"></i> Tipe User</li>
+                                <li class="list-group-item main-menu-item" onClick="location.href='{{ route('user') }}'">
+                                    <i class="fa fa-angle-right"></i> Tipe User</li>
                                 <?php   }  
                         if($menu['id_menu']==33){
                     ?>
-                                <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('service-general-approval') }}'"> <i
-                                        class="fa fa-angle-right"></i> Klien</li>
+                                <li class="list-group-item main-menu-item" onClick="location.href='{{ route('klien') }}'">
+                                    <i class="fa fa-angle-right"></i> Klien</li>
                                 <?php   }  
                         if($menu['id_menu']==32){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('service-general-approval') }}'"> <i
-                                        class="fa fa-angle-right"></i> Edukasi</li>
+                                    onClick="location.href='{{ route('edukasi') }}'"> <i class="fa fa-angle-right"></i>
+                                    Edukasi</li>
                                 <?php  
                         }  
                     } 
@@ -170,6 +169,12 @@ Dashboard
                                 <li class="list-group-item main-menu-item"
                                     onClick="location.href='{{ route('data-tes') }}'"> <i class="fa fa-angle-right"></i>
                                     Tes IST</li>
+                                <?php   }
+                            if($menu['id_menu']==42){
+                    ?>
+                                <li class="list-group-item main-menu-item"
+                                    onClick="location.href='{{ route('data-tes') }}'"> <i class="fa fa-angle-right"></i>
+                                    Set User & User Group</li>
                                 <?php   }
                             if($menu['id_menu']==41){
                     ?>
