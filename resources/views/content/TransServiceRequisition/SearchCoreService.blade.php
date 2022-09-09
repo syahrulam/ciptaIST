@@ -65,8 +65,8 @@
                         <input class="form-control input-bb" type="text" name="phone_number" id="phone_number" value=""/>
                     </div>
                 </div>
-                    <div class="card-footer text-muted">
-                        <div class="form-actions float-right">
+                  <div class="card-footer text-muted">
+                    <div class="form-actions float-right"> 
                         <button type="reset" name="Reset" class="btn btn-danger" onClick="window.location.reload();"><i class="fa fa-times"></i> Batal</button>
                     <button type="submit" name="Save" class="btn btn-primary" title="Save"><i class="fa fa-check"></i> Simpan</button>
                 </div>
