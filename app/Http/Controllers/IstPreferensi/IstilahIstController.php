@@ -47,9 +47,9 @@ class IstilahIstController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIst = DB::table('tb_ist')->get();
+        $getIstIST = DB::table('core_service_parameter')->get();
         $return = [
-            'getIst'
+            'getIstIST'
         ];
         return view('content/IstilahIST/IstilahIST', compact($return));
     }
@@ -61,39 +61,34 @@ class IstilahIstController extends Controller
         return view('content/IstilahIST/TambahIstilahIST',compact('coreservice'));
     }
 
-    public function addprosesistilahist()
+    public function addprosesistilahist(Request $request)
     {
-        $data = json_decode($_POST['datanya']);
-        $kodeIst = $data->kodeIst;
-        $namaIst = $data->namaIst;
-        $durasiIst = $data->durasiIst;
-        $deskripsiIst = $data->deskripsiIst;
+        $request->validate([
+            'kodeist'=>'required',
+            'usianormamulai'=>'required',
+            'usianormaakhir'=>'required',
+            'istrw'=>'required',
+            'istsw'=>'required',
+            'normatotalmulai'=>'required',
+            'normatotalakhir'=>'required',
+        ]);
 
-        $insertData = [
-            'kodeIst' => $kodeIst,
-            'namaIst' => $namaIst,
-            'durasiIst' => $durasiIst,
-            'deskripsiIst' => $deskripsiIst
-        ];
+        $query = DB::table('core_service_parameter')->insert([
+            'service_parameter_id'=>$request->input('kodeist'),
+            'service_id'=>$request->input('usianormamulai'),
+            'service_parameter_no'=>$request->input('usianormaakhir'),
+            'service_parameter_description'=>$request->input('istrw'),
+            'data_state'=>$request->input('istsw'),
+            'created_id'=>$request->input('normatotalmulai'),
+            'updated_id'=>$request->input('normatotalakhir')
+        ]);
 
-        $action = DB::table('tb_ist')->insert($insertData);
-        if ($action) {
-            $notif = [
-                'status' => 'success',
-                'message' => 'Save data success!',
-                'alert' => 'success'
-            ];
-            echo json_encode($notif);
-            return;
-        } else {
-            $notif = [
-                'status' => 'warning',
-                'message' => 'Save data failed!',
-                'alert' => 'warning'
-            ];
-            echo json_encode($notif);
-            return;
-        }
+        if($query){
+
+            return back()->with('success', 'Data berhasil ditambahkan');
+         }else{
+            return back()->with('fail', 'Data gagal ditambahkan');
+         }
     }
 
         public function editistilahist()

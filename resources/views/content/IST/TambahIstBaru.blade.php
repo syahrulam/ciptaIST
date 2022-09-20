@@ -38,7 +38,19 @@
             </div>
         </div>
 
-        <form method="post" action="/system-user/process-add-system-user" enctype="multipart/form-data">
+        @if (Session::get('Success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
+        @if (Session::get('Fail'))
+            <div class="alert alert-danger">
+                {{ Session::get('Fail') }}
+            </div>
+        @endif
+
+        <form method="post" action="ist-prosestambah" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
@@ -46,28 +58,48 @@
                         <div class="form-group">
                             <a class="text-dark">Kode IST<a class='red'> *</a></a>
                             <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
-                                value="" />
+                                value="{{ old('kodeist') }}" />
+                            <span style="color:red">
+                                @error('kodeist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <a class="text-dark">Nama IST<a class='red'> *</a></a>
                             <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
-                                value="" />
+                                value="{{ old('namaist') }}" />
+                            <span style="color:red">
+                                @error('namaist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <a class="text-dark">Durasi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="durasiIst" id="durasiIst"
-                                value="" />
+                            <input class="form-control input-bb" type="text" name="durasiist" id="durasiIst"
+                                value="{{ old('durasiist') }}" />
+                            <span style="color:red">
+                                @error('durasiist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="deskripsiIst" id="deskripsiIst"
-                                value="" />
+                            <input class="form-control input-bb" type="text" name="deskripsiist" id="deskripsiIst"
+                                value="{{ old('deskripsiist') }}" />
+                            <span style="color:red">
+                                @error('deskripsiist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -81,7 +113,7 @@
                 </div>
             </div>
         </form>
-    @section('scripts')
+        {{-- @section('scripts')
         <script>
             $(document).on('click', '#btnSubmit', function(e) {
                 var kodeIst = $('#kodeIst').val();
@@ -121,17 +153,17 @@
                 })
             })
         </script>
-    @endsection
-@stop
+    @endsection --}}
+    @stop
 
-@section('footer')
+    @section('footer')
 
-@stop
+    @stop
 
-@section('css')
+    @section('css')
 
-@stop
+    @stop
 
-@section('js')
+    @section('js')
 
-@stop
+    @stop

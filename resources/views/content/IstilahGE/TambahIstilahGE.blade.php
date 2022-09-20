@@ -1,4 +1,4 @@
-@inject('TransServiceRequisition', 'App\Http\Controllers\IstPreferensi\IstilahGeController')
+@inject('TransServiceRequisition', 'App\Http\Controllers\IstPreferensi\IstController')
 
 @extends('adminlte::page')
 
@@ -19,7 +19,7 @@
 @section('content')
 
     <h3 class="page-title">
-        <b>Tambah IST</b> <small>Mengelola IST</small>
+        <b>Tambah Istilah GE</b> <small>Mengelola Istilah GE</small>
     </h3>
     <br />
     @if (session('msg'))
@@ -30,7 +30,7 @@
     <div class="card border border-dark">
         <div class="card-header bg-dark clearfix">
             <h5 class="mb-0 float-left">
-                Form Tambah IST
+                Form Tambah Istilah GE
             </h5>
             <div class="float-right">
                 <button onclick="location.href='{{ url('istilah-ge') }}'" name="Find" class="btn btn-sm btn-info"
@@ -38,36 +38,56 @@
             </div>
         </div>
 
-        <form method="post" action="/system-user/process-add-system-user" enctype="multipart/form-data">
+        @if (Session::get('Success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
+        @if (Session::get('Fail'))
+            <div class="alert alert-danger">
+                {{ Session::get('Fail') }}
+            </div>
+        @endif
+
+        <form method="post" action="istilah-ge-prosestambah" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Kode IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
-                                value="" />
+                            <a class="text-dark">Total GE Awal<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="totalgeawal" id="totalgeawal"
+                                value="{{ old('totalgeawal') }}" />
+                            <span style="color:red">
+                                @error('kodeist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Nama IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
-                                value="" />
+                            <a class="text-dark">Total GE Akhir<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="totalgeakhir" id="totalgeakhir"
+                                value="{{ old('totalgeawal') }}" />
+                            <span style="color:red">
+                                @error('namaist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Durasi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="durasiIst" id="durasiIst"
-                                value="" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="deskripsiIst" id="deskripsiIst"
-                                value="" />
+                            <a class="text-dark">Nilai GE<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nilaige" id="nilaige"
+                                value="{{ old('nilaige') }}" />
+                            <span style="color:red">
+                                @error('durasiist')
+                                    {{ $message }}
+                                @enderror
+                            </span>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -81,7 +101,7 @@
                 </div>
             </div>
         </form>
-    @section('scripts')
+        {{-- @section('scripts')
         <script>
             $(document).on('click', '#btnSubmit', function(e) {
                 var kodeIst = $('#kodeIst').val();
@@ -121,17 +141,17 @@
                 })
             })
         </script>
-    @endsection
-@stop
+    @endsection --}}
+    @stop
 
-@section('footer')
+    @section('footer')
 
-@stop
+    @stop
 
-@section('css')
+    @section('css')
 
-@stop
+    @stop
 
-@section('js')
+    @section('js')
 
-@stop
+    @stop

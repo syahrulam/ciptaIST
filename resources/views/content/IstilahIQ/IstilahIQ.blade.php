@@ -18,7 +18,7 @@
 @section('content')
 
     <h3 class="page-title">
-        <b>IST</b> <small>Mengelola IST</small>
+        <b>IST</b> <small>Mengelola Istilah IQ</small>
     </h3>
     <br>
     <div class="card border border-dark">
@@ -28,7 +28,7 @@
             </h5>
             <div class="form-actions float-right">
                 <button onclick="location.href='{{ url('istilah-iq-tambah') }}'" name="Find" class="btn btn-sm btn-info"
-                    title="Add Data"><i class="fa fa-plus"></i> Tambah IST Baru</button>
+                    title="Add Data"><i class="fa fa-plus"></i> Tambah Istilah IQ Baru</button>
             </div>
         </div>
 
@@ -46,20 +46,23 @@
                             <th width="10%" style='text-align:center'>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>
-                            <li class="btn btn-outline-info btn-sm"
-                                onClick="location.href='{{ route('halaman-edit-istilah-iq') }}'">
-                                Edit</li>
-                            <li class="btn btn-outline-danger btn-sm" onClick="location.href='{{ route('ist') }}'">
-                                Hapus</li>
-                        </td>
-                        {{-- @foreach ($getIst as $a)
+                    <tbody id="listIstIq">
+                        @foreach ($getIstIq as $a)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $a->service_parameter_id }}</td>
+                                <td>{{ $a->service_id }}</td>
+                                <td>{{ $a->service_parameter_no }}</td>
+                                <td>{{ $a->service_parameter_description }}</td>
+                                <td>
+                                    <li class="btn btn-outline-info btn-sm"
+                                        onClick="location.href='{{ route('halaman-edit-istilah-iq') }}'">
+                                        Edit</li>
+                                    <li class="btn btn-outline-danger btn-sm"
+                                        onClick="location.href='{{ route('istilah-iq') }}'">
+                                        Hapus</li>
+                                </td>
+                                {{-- @foreach ($getIst as $a)
                             <tr>
                                 <td>{{ $a->ID_ist }}</td>
                                 <td>{{ $a->kodeIst }}</td>
@@ -74,8 +77,8 @@
                                         <i class="fa fa-trash-o"></i> Delete
                                     </a>
                                 </td>
-                            </tr>
-                        @endforeach --}}
+                            </tr> --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -84,7 +87,7 @@
     </div>
 
     <script>
-        $('#listIst').html(html);
+        $('#listIstIq').html(html);
         $('#table-ist').DataTable();
     </script>
 @stop

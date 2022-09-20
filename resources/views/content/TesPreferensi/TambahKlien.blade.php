@@ -1,4 +1,4 @@
-@inject('TransServiceRequisition', 'App\Http\Controllers\IstPreferensi\IstController')
+@inject('TransServiceRequisition', 'App\Http\Controllers\TesPreferensi\TesPreferensiController')
 
 @extends('adminlte::page')
 
@@ -6,20 +6,13 @@
 
 @section('content_header')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('ist') }}">IST List</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit IST</li>
-        </ol>
-    </nav>
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Edit IST</b> <small>Mengelola IST</small>
+        <b>Tambah Klien</b> <small>Mengelola Klien</small>
     </h3>
     <br />
     @if (session('msg'))
@@ -30,10 +23,10 @@
     <div class="card border border-dark">
         <div class="card-header bg-dark clearfix">
             <h5 class="mb-0 float-left">
-                Form Tambah IST
+                Form Tambah Klien
             </h5>
             <div class="float-right">
-                <button onclick="location.href='{{ url('ist') }}'" name="Find" class="btn btn-sm btn-info"
+                <button onclick="location.href='{{ url('klien') }}'" name="Find" class="btn btn-sm btn-info"
                     title="Back"><i class="fa fa-angle-left"></i> Kembali</button>
             </div>
         </div>
@@ -50,17 +43,50 @@
             </div>
         @endif
 
-        <form method="post" action="/edit-ist/{{ $data->id }}" enctype="multipart/form-data">
+        <form method="post" action="/klien-prosestambah" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Kode IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
-                                value="{{ $data->kodeist }}" />
+                            <a class="text-dark">Nama Klien<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="namaklien" id="namaklien"
+                                value="{{ old('namaklien') }}" />
                             <span style="color:red">
-                                @error('kodeist')
+                                @error('namaklien')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <a class="text-dark">Nomor Telfon Klien 1<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nomorklien" id="nomorklien"
+                                value="{{ old('nomorklien') }}" />
+                            <span style="color:red">
+                                @error('nomorklien')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a class="text-dark">Nomor Telfon Klien 2<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nomorkliendua" id="nomorkliendua"
+                                value="{{ old('nomorkliendua') }}" />
+                            <span style="color:red">
+                                @error('nomorkliendua')
+                                    {{ $message }}
+                                @enderror
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <a class="text-dark">Nomor Telfon Rumah Klien<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nomorrumah" id="nomorrumah"
+                                value="{{ old('nomorrumah') }}" />
+                            <span style="color:red">
+                                @error('nomorrumah')
                                     {{ $message }}
                                 @enderror
                             </span>
@@ -68,52 +94,29 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Nama IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
-                                value="{{ old('namaist') }}" />
+                            <a class="text-dark">Nama Yang Dapat Dihubungi<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="kontakperson" id="kontakperson"
+                                value="{{ old('kontakperson') }}" />
                             <span style="color:red">
-                                @error('namaist')
+                                @error('kontakperson')
                                     {{ $message }}
                                 @enderror
                             </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Durasi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="durasiist" id="durasiIst"
-                                value="{{ old('durasiist') }}" />
-                            <span style="color:red">
-                                @error('durasiist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="deskripsiist" id="deskripsiIst"
-                                value="{{ old('deskripsiist') }}" />
-                            <span style="color:red">
-                                @error('deskripsiist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-actions float-right">
-                            <button type="reset" name="Reset" class="btn btn-danger"
-                                onClick="window.location.reload();"><i class="fa fa-times"></i> Batal</button>
-                            <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" title="Save"><i
-                                    class="fa fa-check"></i> Simpan</button>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="form-actions float-right">
+                        <button type="reset" name="Reset" class="btn btn-danger" onClick="window.location.reload();"><i
+                                class="fa fa-times"></i> Batal</button>
+                        <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" title="Save"><i
+                                class="fa fa-check"></i> Simpan</button>
+                    </div>
+                </div>
             </div>
-        </form>
-        {{-- @section('scripts')
+    </div>
+    </form>
+    {{-- @section('scripts')
         <script>
             $(document).on('click', '#btnSubmit', function(e) {
                 var kodeIst = $('#kodeIst').val();
@@ -154,16 +157,16 @@
             })
         </script>
     @endsection --}}
-    @stop
+@stop
 
-    @section('footer')
+@section('footer')
 
-    @stop
+@stop
 
-    @section('css')
+@section('css')
 
-    @stop
+@stop
 
-    @section('js')
+@section('js')
 
-    @stop
+@stop

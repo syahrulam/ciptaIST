@@ -1,4 +1,4 @@
-@inject('TransServiceRequisition', 'App\Http\Controllers\IstPreferensi\IstController')
+@inject('TransServiceRequisition', 'App\Http\Controllers\TesPreferensi\TesPreferensiController')
 
 @extends('adminlte::page')
 
@@ -6,20 +6,13 @@
 
 @section('content_header')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('istilah-iq') }}">Istilah IQ List</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Tambah Istilah IQ</li>
-        </ol>
-    </nav>
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Tambah Istilah IQ</b> <small>Mengelola Istilah IQ</small>
+        <b>Tambah Kategori</b> <small>Mengelola Kategori</small>
     </h3>
     <br />
     @if (session('msg'))
@@ -30,10 +23,10 @@
     <div class="card border border-dark">
         <div class="card-header bg-dark clearfix">
             <h5 class="mb-0 float-left">
-                Form Tambah Istilah IQ
+                Form Tambah Kategori
             </h5>
             <div class="float-right">
-                <button onclick="location.href='{{ url('istilah-iq') }}'" name="Find" class="btn btn-sm btn-info"
+                <button onclick="location.href='{{ url('kategori-ujian') }}'" name="Find" class="btn btn-sm btn-info"
                     title="Back"><i class="fa fa-angle-left"></i> Kembali</button>
             </div>
         </div>
@@ -50,53 +43,17 @@
             </div>
         @endif
 
-        <form method="post" action="istilah-iq-prosestambah" enctype="multipart/form-data">
+        <form method="post" action="/kategori-prosestambah" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">IQ SW Mulai<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="iqswmulai" id="iqswmulai"
-                                value="{{ old('iqswmulai') }}" />
+                            <a class="text-dark">Nama Kategori<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="namakategori" id="namakategori"
+                                value="{{ old('namakategori') }}" />
                             <span style="color:red">
-                                @error('iqswmulai')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">IQ SW Akhir<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="iqswakhir" id="iqswakhir"
-                                value="{{ old('iqswakhir') }}" />
-                            <span style="color:red">
-                                @error('iqswakhir')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Nilai IQ<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="nilaiiq" id="nilaiiq"
-                                value="{{ old('nilaiiq') }}" />
-                            <span style="color:red">
-                                @error('nilaiiq')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Presentase IQ<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="presentaseiq" id="presentaseiq"
-                                value="{{ old('presentaseiq') }}" />
-                            <span style="color:red">
-                                @error('presentaseiq')
+                                @error('namakategori')
                                     {{ $message }}
                                 @enderror
                             </span>

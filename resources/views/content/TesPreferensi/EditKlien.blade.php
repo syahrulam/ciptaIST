@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active" aria-current="page">IST List</li>
+            <li class="breadcrumb-item active" aria-current="page">Klien</li>
         </ol>
     </nav>
 
@@ -18,7 +18,7 @@
 @section('content')
 
     <h3 class="page-title">
-        <b>Tipe User</b> <small>Kelola Tipe User</small>
+        <b>Klien</b> <small>Kelola Klien</small>
     </h3>
     <br />
     <div class="card border border-dark">
@@ -27,20 +27,20 @@
                 Halaman Edit
             </h5>
             <div class="form-actions float-right">
-                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('user') }}'">
+                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('edukasi') }}'">
                     Kembali</li>
             </div>
         </div>
 
         <div class="card-body">
-            @foreach ($system_user_group as $p)
-                <form action="/user/{id}/edit-userproses" method="post" enctype="multipart/form-data">
+            @foreach ($tb_klien as $p)
+                <form action="/klien/{id}/edit-klienproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->user_group_id }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
                     <div class="form-group">
-                        <label for="usertypename">Nama Tipe User</label>
-                        <input type="text" required="required" class="form-control" name="namatipeuser"
-                            value="{{ $p->user_group_name }}">
+                        <label for="klien">Nama Klien</label>
+                        <input type="text" required="required" class="form-control" name="namaklien"
+                            value="{{ $p->namaklien }}">
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align  : right !important;">

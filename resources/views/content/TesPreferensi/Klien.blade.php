@@ -6,19 +6,14 @@
 
 @section('content_header')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active" aria-current="page">IST List</li>
-        </ol>
-    </nav>
+
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>IST</b> <small>Mengelola IST</small>
+        <b>Kategori Klien</b> <small>Mengelola Klien</small>
     </h3>
     <br />
     <div class="card border border-dark">
@@ -27,8 +22,8 @@
                 Daftar
             </h5>
             <div class="form-actions float-right">
-                <button onclick="location.href='{{ url('ist-tambah') }}'" name="Find" class="btn btn-sm btn-info"
-                    title="Add Data"><i class="fa fa-plus"></i> Tambah IST Baru</button>
+                <button onclick="location.href='{{ url('klien-tambah') }}'" name="Find" class="btn btn-sm btn-info"
+                    title="Add Data"><i class="fa fa-plus"></i> Tambah Klien</button>
             </div>
         </div>
 
@@ -39,20 +34,28 @@
                     <thead>
                         <tr>
                             <th width="10%" style='text-align:center'>No</th>
-                            <th width="15%" style='text-align:center'>Kode IST</th>
-                            <th width="15%" style='text-align:center'>Nama IST</th>
-                            <th width="5%" style='text-align:center'>Aksi</th>
+                            <th width="15%" style='text-align:center'>Nama Klien</th>
+                            <th width="15%" style='text-align:center'>Nomor Telfon Klien 1</th>
+                            <th width="15%" style='text-align:center'>Nomor Telfon Klien 2</th>
+                            <th width="15%" style='text-align:center'>Nomor Telfon Rumah Klien</th>
+                            <th width="15%" style='text-align:center'>Nama Yang Dapat Dihubungi</th>
+                            <th width="10%" style='text-align:center'>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="listIst">
-                        @foreach ($getIst as $a)
+                    <tbody id="listKlien">
+                        @foreach ($tb_klien as $a)
                             <tr>
-                                <td>{{ $a->ID_ist }}</td>
-                                <td>{{ $a->kodeIst }}</td>
-                                <td>{{ $a->namaIst }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $a->namaklien }}</td>
+                                <td>{{ $a->nomorklien }}</td>
+                                <td>{{ $a->nomorkliendua }}</td>
+                                <td>{{ $a->nomorrumah }}</td>
+                                <td>{{ $a->kontakperson }}</td>
                                 <td>
-                                    <a type="button" class="btn btn-outline-warning btn-sm" href="#">Edit</a>
-                                    <a type="button" class="btn btn-outline-danger btn-sm" href="#">Hapus</a>
+                                    <a href="/klien/{{ $a->id }}/edit-klien/"
+                                        class="btn btn-outline-warning btn-sm">Edit</a>
+                                    <a href="/klien/{{ $a->id }}/hapus-klien/"
+                                        class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -64,7 +67,7 @@
     </div>
 
     <script>
-        $('#listIst').html(html);
+        $('#listKlien').html(html);
         $('#table-ist').DataTable();
     </script>
 @stop

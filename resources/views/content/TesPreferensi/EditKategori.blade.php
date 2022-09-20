@@ -9,7 +9,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active" aria-current="page">IST List</li>
+            <li class="breadcrumb-item active" aria-current="page">Kategori</li>
         </ol>
     </nav>
 
@@ -18,7 +18,7 @@
 @section('content')
 
     <h3 class="page-title">
-        <b>Tipe User</b> <small>Kelola Tipe User</small>
+        <b>Kategori</b> <small>Kelola Kategori</small>
     </h3>
     <br />
     <div class="card border border-dark">
@@ -27,20 +27,20 @@
                 Halaman Edit
             </h5>
             <div class="form-actions float-right">
-                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('user') }}'">
+                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('kategori-ujian') }}'">
                     Kembali</li>
             </div>
         </div>
 
         <div class="card-body">
-            @foreach ($system_user_group as $p)
-                <form action="/user/{id}/edit-userproses" method="post" enctype="multipart/form-data">
+            @foreach ($tb_kategori as $p)
+                <form action="/kategori/{id}/edit-kategoriproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->user_group_id }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
                     <div class="form-group">
-                        <label for="usertypename">Nama Tipe User</label>
-                        <input type="text" required="required" class="form-control" name="namatipeuser"
-                            value="{{ $p->user_group_name }}">
+                        <label for="kategori">Nama Kategori</label>
+                        <input type="text" required="required" class="form-control" name="namakategori"
+                            value="{{ $p->namakategori }}">
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align  : right !important;">

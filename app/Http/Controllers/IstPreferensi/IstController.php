@@ -47,7 +47,7 @@ class IstController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIst = DB::table('tb_ist')->get();
+        $getIst = DB::table('trans_service_requisition')->get();
         $return = [
             'getIst'
         ];
@@ -55,49 +55,53 @@ class IstController extends Controller
     }
     public function tambahist()
     {
-        $coreservice = CoreService::where('data_state', 0)
-        ->get();
-
-        return view('content/IST/TambahIstBaru',compact('coreservice'));
-    }
-
-    public function addproses()
-    {
-        $data = json_decode($_POST['datanya']);
-        $kodeIst = $data->kodeIst;
-        $namaIst = $data->namaIst;
-        $durasiIst = $data->durasiIst;
-        $deskripsiIst = $data->deskripsiIst;
-
-        $insertData = [
-            'kodeIst' => $kodeIst,
-            'namaIst' => $namaIst,
-            'durasiIst' => $durasiIst,
-            'deskripsiIst' => $deskripsiIst
-        ];
-
-        $action = DB::table('tb_ist')->insert($insertData);
-        if ($action) {
-            $notif = [
-                'status' => 'success',
-                'message' => 'Save data success!',
-                'alert' => 'success'
-            ];
-            echo json_encode($notif);
-            return;
-        } else {
-            $notif = [
-                'status' => 'warning',
-                'message' => 'Save data failed!',
-                'alert' => 'warning'
-            ];
-            echo json_encode($notif);
-            return;
-        }
-    }
-
-    public function editist()
-    {
         return view('content/IST/TambahIstBaru');
+    }
+
+    public function addprosesist(Request $request)
+    {
+        $request->validate([
+            'kodeist'=>'required',
+            'namaist'=>'required',
+            'durasiist'=>'required',
+            'deskripsiist'=>'required'
+        ]);
+
+        $query = DB::table('trans_service_requisition')->insert([
+            'service_requisition_no'=>$request->input('kodeist'),
+            'service_requisition_name'=>$request->input('namaist'),
+            'delete_remark'=>$request->input('durasiist'),
+            'service_requisition_status'=>$request->input('deskripsiist')
+        ]);
+
+        if($query){
+
+            return back()->with('success', 'Data berhasil ditambahkan');
+         }else{
+            return back()->with('fail', 'Data gagal ditambahkan');
+         }
+    }
+
+    public function editist($id)
+    {
+        $data = TransServiceRequisition::find($id);
+        // dd($data); 
+
+        return view('content\IST\EditIst', compact('data'));
+    }
+
+        public function editistprosess($id)
+    {
+        $data = TransServiceRequisition::find($id);
+        $data->update($request->all());
+        // dd($data); 
+
+        return redirect()->route('ist');
+    }
+
+    public function deleteist($id)
+    {
+        $data = TransServiceRequisition::find($id);
+        $data->delete();
     }
 };

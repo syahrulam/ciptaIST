@@ -130,12 +130,14 @@ Dashboard
                         if($menu['id_menu']==32){
                     ?>
                                 <li class="list-group-item main-menu-item" onClick="location.href='{{ route('user') }}'">
-                                    <i class="fa fa-angle-right"></i> Tipe User</li>
+                                    <i class="fa fa-angle-right"></i> Tipe User
+                                </li>
                                 <?php   }  
                         if($menu['id_menu']==33){
                     ?>
                                 <li class="list-group-item main-menu-item" onClick="location.href='{{ route('klien') }}'">
-                                    <i class="fa fa-angle-right"></i> Klien</li>
+                                    <i class="fa fa-angle-right"></i> Klien
+                                </li>
                                 <?php   }  
                         if($menu['id_menu']==32){
                     ?>

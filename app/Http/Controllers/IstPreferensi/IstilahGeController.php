@@ -47,9 +47,9 @@ class IstilahGeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIst = DB::table('tb_ist')->get();
+        $getGe = DB::table('trans_service_disposition')->get();
         $return = [
-            'getIst'
+            'getGe'
         ];
         return view('content/IstilahGE/IstilahGE', compact($return));
     }
@@ -61,39 +61,26 @@ class IstilahGeController extends Controller
         return view('content/IstilahGE/TambahIstilahGE',compact('coreservice'));
     }
 
-    public function addprosesistilahge()
+    public function addprosesistilahge(Request $request)
     {
-        $data = json_decode($_POST['datanya']);
-        $kodeIst = $data->kodeIst;
-        $namaIst = $data->namaIst;
-        $durasiIst = $data->durasiIst;
-        $deskripsiIst = $data->deskripsiIst;
+        $request->validate([
+            'totalgeawal'=>'required',
+            'totalgeakhir'=>'required',
+            'nilaige'=>'required'
+        ]);
 
-        $insertData = [
-            'kodeIst' => $kodeIst,
-            'namaIst' => $namaIst,
-            'durasiIst' => $durasiIst,
-            'deskripsiIst' => $deskripsiIst
-        ];
+        $query = DB::table('trans_service_disposition')->insert([
+            'service_id'=>$request->input('totalgeawal'),
+            'section_id'=>$request->input('totalgeakhir'),
+            'approved_id'=>$request->input('nilaige')
+        ]);
 
-        $action = DB::table('tb_ist')->insert($insertData);
-        if ($action) {
-            $notif = [
-                'status' => 'success',
-                'message' => 'Save data success!',
-                'alert' => 'success'
-            ];
-            echo json_encode($notif);
-            return;
-        } else {
-            $notif = [
-                'status' => 'warning',
-                'message' => 'Save data failed!',
-                'alert' => 'warning'
-            ];
-            echo json_encode($notif);
-            return;
-        }
+        if($query){
+
+            return back()->with('success', 'Data berhasil ditambahkan');
+         }else{
+            return back()->with('fail', 'Data gagal ditambahkan');
+         }
     }
 
         public function editistilahge()

@@ -83,8 +83,10 @@ Route::post('/service/process-edit-service', [CoreServiceController::class, 'pro
 //ist start
 Route::get('/ist', [IstController::class, 'index'])->name('ist');
 Route::get('/ist-tambah', [IstController::class, 'tambahist'])->name('ist-tambah');
-Route::post('/ist-prosestambah', [IstController::class, 'addproses'])->name('ist-prosestambah');
-Route::get('/halaman-edit-ist', [IstController::class, 'editist'])->name('halaman-edit-ist');
+Route::post('/ist-prosestambah', [IstController::class, 'addprosesist'])->name('ist-prosestambah');
+Route::get('/halaman-edit-ist/{id}', [IstController::class, 'editist'])->name('halaman-edit-ist');
+Route::post('/edit-ist/{id}', [IstController::class, 'editistprosess'])->name('edit-ist');
+Route::get('/hapus-ist/{id}', [IstController::class, 'deleteist'])->name('delete-ist');
 // ist end
 
 //istilah ist start
@@ -97,14 +99,14 @@ Route::get('/halaman-edit-istilah-ist', [IstilahIstController::class, 'editistil
 //istilah ge start
 Route::get('/istilah-ge', [IstilahGeController::class, 'index'])->name('istilah-ge');
 Route::get('/istilah-ge-tambah', [IstilahGeController::class, 'tambahistilahge'])->name('istilah-ge-tambah');
-Route::post('/istilah-ge-prosestambah', [IstilahGeController::class, 'addproses'])->name('istilah-ge-prosestambah');
+Route::post('/istilah-ge-prosestambah', [IstilahGeController::class, 'addprosesistilahge'])->name('istilah-ge-prosestambah');
 Route::get('/halaman-edit-istilah-ge', [IstilahGeController::class, 'editistilahge'])->name('halaman-edit-istilah-ge');
 //istilah ge end
 
 //istilah iq start
 Route::get('/istilah-iq', [IstilahIqController::class, 'index'])->name('istilah-iq');
 Route::get('/istilah-iq-tambah', [IstilahIqController::class, 'tambahistilahiq'])->name('istilah-iq-tambah');
-Route::post('/istilah-iq-prosestambah', [IstilahIqController::class, 'addproses'])->name('istilah-iq-prosestambah');
+Route::post('/istilah-iq-prosestambah', [IstilahIqController::class, 'addprosesistilahiq'])->name('istilah-iq-prosestambah');
 Route::get('/halaman-edit-istilah-iq', [IstilahIqController::class, 'editistilahiq'])->name('halaman-edit-istilah-iq');
 //istilah iq end
 
@@ -128,25 +130,53 @@ Route::get('/klasifikasi-ist', [KlasifikasiIstController::class, 'index'])->name
 //Tes:Preferensi
 //pertanyaan start
 Route::get('/pertanyaan', [TesPreferensiController::class, 'pertanyaan'])->name('pertanyaan');
+Route::get('/tambah-pertanyaan', [TesPreferensiController::class, 'tambahpertanyaan'])->name('tambah-pertanyaan');
+Route::post('/proses-tambah-pertanyaan', [TesPreferensiController::class, 'prosestambahpertanyaan'])->name('proses-tambah-pertanyaan');
 Route::get('/{id}/detail-pertanyaan', [TesPreferensiController::class, 'detailPertanyaan'])->name('detail-pertanyaan');
-Route::get('/edit-pertanyaan', [TesPreferensiController::class, 'editPertanyaan'])->name('edit-pertanyaan');
+Route::get('/pertanyaan/{id}/edit-pertanyaan', [TesPreferensiController::class, 'editPertanyaan'])->name('edit-pertanyaan');
+Route::post('/pertanyaan/{id}/edit-pertanyaanproses', [TesPreferensiController::class, 'editPertanyaanProses'])->name('edit-pertanyaanproses');
+Route::get('/pertanyaan/{id}/hapus-pertanyaan', [TesPreferensiController::class, 'hapusPertanyaan'])->name('hapus-pertanyaan');
+Route::get('/pertanyaan/cari-pertanyaan', [TesPreferensiController::class, 'caripertanyaan'])->name('/pertanyaan/cari-pertanyaan');
 //pertanyaan end
 
 //tipe user start
 Route::get('/user', [TesPreferensiController::class, 'user'])->name('user');
-Route::get('/edit-user', [TesPreferensiController::class, 'edituser'])->name('edit-user');
+Route::get('/user-tambah', [TesPreferensiController::class, 'tambahuser'])->name('user-tambah');
+Route::post('/user-prosestambah', [TesPreferensiController::class, 'addprosesuser'])->name('user-prosestambah');
+Route::get('/user/{id}/edit-user', [TesPreferensiController::class, 'edituser'])->name('edit-user');
+Route::post('/user/{id}/edit-userproses', [TesPreferensiController::class, 'edituserproses'])->name('edit-userproses');
+Route::get('/user/{id}/hapus-user', [TesPreferensiController::class, 'hapususer'])->name('hapus-user');
+Route::get('/user/cari-user', [TesPreferensiController::class, 'cariuser'])->name('/pertanyaan/cari-user');
 //tipe user end
 
 //edukasi start
 Route::get('/edukasi', [TesPreferensiController::class, 'edukasi'])->name('edukasi');
+Route::get('/edukasi-tambah', [TesPreferensiController::class, 'tambahedukasi'])->name('edukasi-tambah');
+Route::post('/edukasi-prosestambah', [TesPreferensiController::class, 'addprosesedukasi'])->name('edukasi-prosestambah');
+Route::get('/edukasi/{id}/edit-edukasi', [TesPreferensiController::class, 'editedukasi'])->name('edit-edukasi');
+Route::post('/edukasi/{id}/edit-edukasiproses', [TesPreferensiController::class, 'editedukasiproses'])->name('edit-edukasiproses');
+Route::get('/edukasi/{id}/hapus-edukasi', [TesPreferensiController::class, 'hapusedukasi'])->name('hapus-edukasi');
+Route::get('/edukasi/cari-edukasi', [TesPreferensiController::class, 'cariedukasi'])->name('/pertanyaan/cari-edukasi');
 //edukasi end
 
 //kategori ujian start
-Route::get('/kategori-ujian', [TesPreferensiController::class, 'kategoriUjian'])->name('kategori-ujian');
+Route::get('/kategori-ujian', [TesPreferensiController::class, 'kategori'])->name('kategori-ujian');
+Route::get('/kategori-tambah', [TesPreferensiController::class, 'tambahkategori'])->name('tambah-kategori-ujian');
+Route::post('/kategori-prosestambah', [TesPreferensiController::class, 'addproseskategori'])->name('kategori-prosestambah');
+Route::get('/kategori/{id}/edit-kategori', [TesPreferensiController::class, 'editkategori'])->name('edit-kategori');
+Route::post('/kategori/{id}/edit-kategoriproses', [TesPreferensiController::class, 'editkategoriproses'])->name('edit-kategoriproses');
+Route::get('/kategori/{id}/hapus-kategori', [TesPreferensiController::class, 'hapuskategori'])->name('hapus-kategori');
+Route::get('/kategori/cari-kategori', [TesPreferensiController::class, 'carikategori'])->name('/kategori/cari-kategori');
 //kategori ujian end
 
 //klien start
 Route::get('/klien', [TesPreferensiController::class, 'klien'])->name('klien');
+Route::get('/klien-tambah', [TesPreferensiController::class, 'tambahklien'])->name('tambah-klien');
+Route::post('/klien-prosestambah', [TesPreferensiController::class, 'addprosesklien'])->name('klien-prosestambah');
+Route::get('/klien/{id}/edit-klien', [TesPreferensiController::class, 'editklien'])->name('edit-klien');
+Route::post('/klien/{id}/edit-klienproses', [TesPreferensiController::class, 'editklienproses'])->name('edit-klienproses');
+Route::get('/klien/{id}/hapus-klien', [TesPreferensiController::class, 'hapusklien'])->name('hapus-klien');
+Route::get('/klien/cari-klien', [TesPreferensiController::class, 'cariklien'])->name('/klien/cari-klien');
 //klien end
 
 Route::post('/trans-service-requisition/filter', [TransServiceRequisitionController::class, 'filter'])->name('filter-service-requisition');

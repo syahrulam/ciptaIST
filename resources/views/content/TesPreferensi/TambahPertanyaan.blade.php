@@ -1,4 +1,4 @@
-@inject('TransServiceRequisition', 'App\Http\Controllers\IstPreferensi\IstController')
+@inject('TransServiceRequisition', 'App\Http\Controllers\TesPreferensi\TesPreferensiController')
 
 @extends('adminlte::page')
 
@@ -6,20 +6,13 @@
 
 @section('content_header')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item"><a href="{{ url('ist') }}">IST List</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit IST</li>
-        </ol>
-    </nav>
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Edit IST</b> <small>Mengelola IST</small>
+        <b>Tambah Pertanyaan</b> <small>Mengelola Pertanyaan</small>
     </h3>
     <br />
     @if (session('msg'))
@@ -30,10 +23,10 @@
     <div class="card border border-dark">
         <div class="card-header bg-dark clearfix">
             <h5 class="mb-0 float-left">
-                Form Tambah IST
+                Form Tambah Pertanyaan
             </h5>
             <div class="float-right">
-                <button onclick="location.href='{{ url('ist') }}'" name="Find" class="btn btn-sm btn-info"
+                <button onclick="location.href='{{ url('pertanyaan') }}'" name="Find" class="btn btn-sm btn-info"
                     title="Back"><i class="fa fa-angle-left"></i> Kembali</button>
             </div>
         </div>
@@ -50,29 +43,27 @@
             </div>
         @endif
 
-        <form method="post" action="/edit-ist/{{ $data->id }}" enctype="multipart/form-data">
+        <form method="post" action="/proses-tambah-pertanyaan" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
                     <div class="col-md-6">
                         <div class="form-group">
                             <a class="text-dark">Kode IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
-                                value="{{ $data->kodeist }}" />
+                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeist"
+                                value="{{ old('kodeist') }}" />
                             <span style="color:red">
                                 @error('kodeist')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Nama IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
-                                value="{{ old('namaist') }}" />
+                            <a class="text-dark">Nomor Pertanyaan<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nopertanyaan" id="nopertanyaan"
+                                value="{{ old('nopertanyaan') }}" />
                             <span style="color:red">
-                                @error('namaist')
+                                @error('nopertanyaan')
                                     {{ $message }}
                                 @enderror
                             </span>
@@ -80,40 +71,41 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">Durasi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="durasiist" id="durasiIst"
-                                value="{{ old('durasiist') }}" />
+                            <a class="text-dark">Pertanyaan<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="pertanyaan" id="pertanyaan"
+                                value="{{ old('pertanyaan') }}" />
                             <span style="color:red">
-                                @error('durasiist')
+                                @error('pertanyaan')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-                    </div>
-                    <div class="col-md-6">
+
                         <div class="form-group">
-                            <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="deskripsiist" id="deskripsiIst"
-                                value="{{ old('deskripsiist') }}" />
+                            <a class="text-dark">Komentar Pertanyaan<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="komentarpertanyaan"
+                                id="komentarpertanyaan" value="{{ old('komentarpertanyaan') }}" />
                             <span style="color:red">
-                                @error('deskripsiist')
+                                @error('komentarpertanyaan')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
+
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-actions float-right">
-                            <button type="reset" name="Reset" class="btn btn-danger"
-                                onClick="window.location.reload();"><i class="fa fa-times"></i> Batal</button>
-                            <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" title="Save"><i
-                                    class="fa fa-check"></i> Simpan</button>
-                        </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-actions float-right">
+                        <button type="reset" name="Reset" class="btn btn-danger" onClick="window.location.reload();"><i
+                                class="fa fa-times"></i> Batal</button>
+                        <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" title="Save"><i
+                                class="fa fa-check"></i> Simpan</button>
                     </div>
                 </div>
             </div>
-        </form>
-        {{-- @section('scripts')
+    </div>
+    </form>
+    {{-- @section('scripts')
         <script>
             $(document).on('click', '#btnSubmit', function(e) {
                 var kodeIst = $('#kodeIst').val();
@@ -154,16 +146,16 @@
             })
         </script>
     @endsection --}}
-    @stop
+@stop
 
-    @section('footer')
+@section('footer')
 
-    @stop
+@stop
 
-    @section('css')
+@section('css')
 
-    @stop
+@stop
 
-    @section('js')
+@section('js')
 
-    @stop
+@stop

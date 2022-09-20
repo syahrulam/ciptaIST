@@ -6,19 +6,14 @@
 
 @section('content_header')
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
-            <li class="breadcrumb-item active" aria-current="page">IST List</li>
-        </ol>
-    </nav>
+
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Tipe User</b> <small>Kelola Tipe User</small>
+        <b>Tipe Pengguna</b> <small>Mengelola Pengguna</small>
     </h3>
     <br />
     <div class="card border border-dark">
@@ -27,12 +22,18 @@
                 Daftar
             </h5>
             <div class="form-actions float-right">
-                <button onclick="location.href='{{ url('ist-tambah') }}'" name="Find" class="btn btn-sm btn-info"
-                    title="Add Data"><i class="fa fa-plus"></i> Tambah IST Baru</button>
+                <button onclick="location.href='{{ url('user-tambah') }}'" name="Find" class="btn btn-sm btn-info"
+                    title="Add Data"><i class="fa fa-plus"></i> Tambah Pengguna Baru</button>
             </div>
         </div>
 
         <div class="card-body">
+            <div class="form-actions float-right">
+                <form action="/user/cari-user" method="GET">
+                    <input type="text" name="cari" placeholder="Nama Jenis Pengguna" value="{{ old('cari') }}">
+                    <input type="submit" value="CARI">
+                </form><br>
+            </div>
             <div class="table-responsive">
                 <table id="table-ist" style="width:100%"
                     class="table table-striped table-bordered table-hover table-full-width">
@@ -43,16 +44,16 @@
                             <th width="5%" style='text-align:center'>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="listIst">
-                        @foreach ($getIst as $a)
+                    <tbody id="listUser">
+                        @foreach ($system_user_group as $a)
                             <tr>
-                                <td>{{ $a->ID_ist }}</td>
-                                <td>{{ $a->kodeIst }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $a->user_group_name }}</td>
                                 <td>
-                                    <li class="btn btn-outline-warning btn-sm"
-                                        onClick="location.href='{{ route('edit-user') }}'">
-                                        Edit</li>
-                                    <a type="button" class="btn btn-outline-danger btn-sm" href="#">Hapus</a>
+                                    <a href="/user/{{ $a->user_group_id }}/edit-user"
+                                        class="btn btn-outline-warning btn-sm">Edit</a>
+                                    <a href="/user/{{ $a->user_group_id }}/hapus-user"
+                                        class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -61,10 +62,10 @@
             </div>
         </div>
     </div>
-    </div>
+
 
     <script>
-        $('#listIst').html(html);
+        $('#listUser').html(html);
         $('#table-ist').DataTable();
     </script>
 @stop

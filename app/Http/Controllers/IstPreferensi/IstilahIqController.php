@@ -47,9 +47,9 @@ class IstilahIqController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIst = DB::table('tb_ist')->get();
+        $getIstIq = DB::table('core_service_parameter')->get();
         $return = [
-            'getIst'
+            'getIstIq'
         ];
         return view('content/IstilahIQ/IstilahIQ', compact($return));
     }
@@ -61,39 +61,28 @@ class IstilahIqController extends Controller
         return view('content/IstilahIQ/TambahIstilahIQ',compact('coreservice'));
     }
 
-    public function addprosesistilahiq()
+    public function addprosesistilahiq(Request $request)
     {
-        $data = json_decode($_POST['datanya']);
-        $kodeIst = $data->kodeIst;
-        $namaIst = $data->namaIst;
-        $durasiIst = $data->durasiIst;
-        $deskripsiIst = $data->deskripsiIst;
+        $request->validate([
+            'iqswmulai'=>'required',
+            'iqswakhir'=>'required',
+            'nilaiiq'=>'required',
+            'presentaseiq'=>'required'
+        ]);
 
-        $insertData = [
-            'kodeIst' => $kodeIst,
-            'namaIst' => $namaIst,
-            'durasiIst' => $durasiIst,
-            'deskripsiIst' => $deskripsiIst
-        ];
+        $query = DB::table('trans_service_requisition')->insert([
+            'service_requisition_no'=>$request->input('iqswmulai'),
+            'service_requisition_name'=>$request->input('iqswakhir'),
+            'delete_remark'=>$request->input('nilaiiq'),
+            'service_requisition_status'=>$request->input('presentaseiq')
+        ]);
 
-        $action = DB::table('tb_ist')->insert($insertData);
-        if ($action) {
-            $notif = [
-                'status' => 'success',
-                'message' => 'Save data success!',
-                'alert' => 'success'
-            ];
-            echo json_encode($notif);
-            return;
-        } else {
-            $notif = [
-                'status' => 'warning',
-                'message' => 'Save data failed!',
-                'alert' => 'warning'
-            ];
-            echo json_encode($notif);
-            return;
-        }
+        if($query){
+
+            return back()->with('success', 'Data berhasil ditambahkan');
+         }else{
+            return back()->with('fail', 'Data gagal ditambahkan');
+         }
     }
 
     public function editistilahiq()

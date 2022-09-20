@@ -26,21 +26,31 @@
         </div>
 
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="table-ist" style="width:100%"
-                    class="table table-striped table-bordered table-hover table-full-width"><label>Kode IST</label>
-                    <div class="form-group form-md-line-input">
-                        <input type="text" class="form-control" id="kodeIst" name="ist_code" value="AN"
-                            readonly=""><br>
-                        <label>Pertanyaan Nomor</label>
-                        <input type="text" class="form-control" id="PertanyaanNomor" name="question_no" value="1"
-                            readonly=""><br>
-                        <label>Pertanyaan</label>
-                        <input type="text" class="form-control" id="JudulPertanyaan" name="question_title"
-                            value="Pikun : Orang Tua = Ingin Tahu : ?" readonly="">
+            @foreach ($tb_pertanyaan as $p)
+                <form action="" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{ $p->ID }}"> <br />
+                    <div class="form-group">
+                        <label for="kodeIst">Kode IST</label>
+                        <input type="text" required="required" class="form-control" name="kodeist"
+                            value="{{ $p->kodeIST }}">
                     </div>
-                </table>
-            </div>
+                    <div class="form-group">
+                        <label for="noPertanyaan">Nomor Pertanyaan</label>
+                        <input type="text" required="required" class="form-control" name="nopertanyaan"
+                            value="{{ $p->nomorPertanyaan }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="KomenPertanyaan">Komentar Pertanyaan</label>
+                        <input type="text" required="required" class="form-control" name="komenpertanyaan"
+                            value="{{ $p->komentarPertanyaan }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Pertanyaan">Pertanyaan</label>
+                        <input type="text" required="required" class="form-control" name="pertanyaan"
+                            value="{{ $p->pertanyaan }}">
+                    </div>
+            @endforeach
         </div>
     </div>
     <div class="card border border-dark">

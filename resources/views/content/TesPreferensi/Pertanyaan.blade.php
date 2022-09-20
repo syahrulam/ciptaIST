@@ -19,9 +19,19 @@
             <h5 class="mb-0 float-left">
                 Daftar
             </h5>
+            <div class="form-actions float-right">
+                <button onclick="location.href='{{ url('tambah-pertanyaan') }}'" name="Find" class="btn btn-sm btn-info"
+                    title="Add Data"><i class="fa fa-plus"></i> Tambah Pertanyaan</button>
+            </div>
         </div>
 
         <div class="card-body">
+            <div class="form-actions float-right">
+                <form action="/pertanyaan/cari-pertanyaan" method="GET">
+                    <input type="text" name="cari" placeholder="Nomor Pertanyaan" value="{{ old('cari') }}">
+                    <input type="submit" value="CARI">
+                </form><br>
+            </div>
             <div class="table-responsive">
                 <table id="table-ist" style="width:100%"
                     class="table table-striped table-bordered table-hover table-full-width">
@@ -35,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody id="listPertanyaan">
-                        @foreach ($getPertanyaan as $a)
+                        @foreach ($tb_pertanyaan as $a)
                             <tr>
                                 <td>{{ $a->ID }}</td>
                                 <td>{{ $a->kodeIST }}</td>
@@ -44,13 +54,10 @@
                                 <td>
                                     <a href="{{ $a->ID }}/detail-pertanyaan"
                                         class="btn btn-outline-info btn-sm">Detail</a>
-                                    {{-- <a type="button" id="btnDetail" href="{{ url('detail-pertanyaan') }}"
-                                        class="btn btn-outline-info btn-sm">Detail</a>
-
-                                    <a type="button" id="btnEdit" href="{{ url('edit-pertanyaan') }}"
-                                        class="btn btn-outline-warning btn-sm">Edit</a> --}}
-
-                                    <a type="button" class="btn btn-outline-danger btn-sm" href="#">Hapus</a>
+                                    <a href="/pertanyaan/{{ $a->ID }}/edit-pertanyaan"
+                                        class="btn btn-outline-warning btn-sm">Edit</a>
+                                    <a href="/pertanyaan/{{ $a->ID }}/hapus-pertanyaan"
+                                        class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -59,7 +66,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 
     <script>
         $('#listPertanyaan').html(html);

@@ -47,15 +47,17 @@
                     <tbody id="listIst">
                         @foreach ($getIst as $a)
                             <tr>
-                                <td>{{ $a->ID_ist }}</td>
-                                <td>{{ $a->kodeIst }}</td>
-                                <td>{{ $a->namaIst }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $a->service_requisition_no }}</td>
+                                <td>{{ $a->service_requisition_name }}</td>
                                 <td>
-                                    <li class="btn btn-outline-info btn-sm"
+                                    <a href="/halaman-edit-ist/{{ $a->service_requisition_no }}"
+                                        class="btn btn-outline-warning btn-sm">Edit</a>
+                                    {{-- <li class="btn btn-outline-info btn-sm"
                                         onClick="location.href='{{ route('halaman-edit-ist') }}'">
-                                        Edit</li>
-                                    <li class="btn btn-outline-danger btn-sm" onClick="location.href='{{ route('ist') }}'">
-                                        Hapus</li>
+                                        Edit</li> --}}
+                                    <a href="/delete-ist/{{ $a->service_requisition_no }}"
+                                        class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
                         @endforeach
