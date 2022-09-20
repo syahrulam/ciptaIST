@@ -28,6 +28,12 @@
         </div>
 
         <div class="card-body">
+            <div class="form-actions float-right">
+                <form action="/edukasi/cari-edukasi" method="GET">
+                    <input type="text" name="cari" placeholder="Nama Edukasi" value="{{ old('cari') }}">
+                    <input type="submit" value="CARI">
+                </form><br>
+            </div>
             <div class="table-responsive">
                 <table id="table-ist" style="width:100%"
                     class="table table-striped table-bordered table-hover table-full-width">
