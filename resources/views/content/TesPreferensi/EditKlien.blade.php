@@ -27,7 +27,7 @@
                 Halaman Edit
             </h5>
             <div class="form-actions float-right">
-                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('edukasi') }}'">
+                <li class="btn btn-outline-warning btn-sm" onClick="location.href='{{ route('klien') }}'">
                     Kembali</li>
             </div>
         </div>

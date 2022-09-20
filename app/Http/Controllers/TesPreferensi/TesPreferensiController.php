@@ -394,14 +394,14 @@ class TesPreferensiController extends Controller
 	]);
     
 
-	return redirect('/Klien');
+	return redirect('/klien');
     }
 
     public function hapusklien($id)
     {
         DB::table('tb_klien')->where('id',$id)->delete();
 
-	    return redirect('/Klien');
+	    return redirect('/klien');
     }
 
     public function cariklien(Request $request)
