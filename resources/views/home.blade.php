@@ -163,7 +163,7 @@ Dashboard
                             if($menu['id_menu']==41){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('data-tes') }}'"> <i class="fa fa-angle-right"></i>
+                                    onClick="location.href='{{ route('datates') }}'"> <i class="fa fa-angle-right"></i>
                                     Data Tes</li>
                                 <?php   }
                             if($menu['id_menu']==42){

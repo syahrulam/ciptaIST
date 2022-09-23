@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardReviewController;
 use App\Http\Controllers\PrintServiceController;
 use App\Http\Controllers\PrintServiceGeneralController;
 use App\Http\Controllers\ScanQRController;
+use App\Http\Controllers\DataPreferensi\DataPreferensiController;
 use App\Http\Controllers\IstPreferensi\IstController;
 use App\Http\Controllers\IstPreferensi\IstilahIstController;
 use App\Http\Controllers\IstPreferensi\IstilahGeController;
@@ -178,6 +179,26 @@ Route::post('/klien/{id}/edit-klienproses', [TesPreferensiController::class, 'ed
 Route::get('/klien/{id}/hapus-klien', [TesPreferensiController::class, 'hapusklien'])->name('hapus-klien');
 Route::get('/klien/cari-klien', [TesPreferensiController::class, 'cariklien'])->name('/klien/cari-klien');
 //klien end
+
+//datates start
+Route::get('/datates', [DataPreferensiController::class, 'datates'])->name('datates');
+Route::get('/datates-tambah', [DataPreferensiController::class, 'tambahdatates'])->name('tambah-datates');
+Route::post('/datates-prosestambah', [DataPreferensiController::class, 'prosestambahdatates'])->name('datates-prosestambah');
+Route::get('/datates/{id}/edit-datates', [DataPreferensiController::class, 'editdatates'])->name('edit-datates');
+Route::post('/datates/{id}/edit-datatesproses', [DataPreferensiController::class, 'editdatatesproses'])->name('edit-datatesproses');
+Route::get('/datates/{id}/hapus-datates', [DataPreferensiController::class, 'hapusdatates'])->name('hapus-datates');
+Route::get('/datates/cari-datates', [DataPreferensiController::class, 'caridatates'])->name('/datates/cari-datates');
+//datates end
+
+//hasil tes ist start
+Route::get('/hasiltesist', [DataPreferensiController::class, 'hasiltesist'])->name('hasiltesist');
+Route::get('/hasiltesist-tambah', [DataPreferensiController::class, 'tambahhasiltesist'])->name('tambah-hasiltesist');
+Route::post('/hasiltesist-prosestambah', [DataPreferensiController::class, 'prosestambahhasiltesist'])->name('hasiltesist-prosestambah');
+Route::get('/hasiltesist/{id}/edit-hasiltesist', [DataPreferensiController::class, 'edithasiltesist'])->name('edit-hasiltesist');
+Route::post('/hasiltesist/{id}/edit-hasiltesistproses', [DataPreferensiController::class, 'edithasiltesistproses'])->name('edit-hasiltesistproses');
+Route::get('/hasiltesist/{id}/hapus-hasiltesist', [DataPreferensiController::class, 'hapushasiltesist'])->name('hapus-hasiltesist');
+Route::get('/hasiltesist/cari-hasiltesist', [DataPreferensiController::class, 'carihasiltesist'])->name('/hasiltesist/cari-hasiltesist');
+//hasil tes ist end
 
 Route::post('/trans-service-requisition/filter', [TransServiceRequisitionController::class, 'filter'])->name('filter-service-requisition');
 Route::get('/trans-service-requisition/add/{service_requisition_id}', [TransServiceRequisitionController::class, 'addTransServiceRequisition'])->name('add-service-requisition');
