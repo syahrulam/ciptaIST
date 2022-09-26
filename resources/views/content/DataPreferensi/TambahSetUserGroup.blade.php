@@ -7,13 +7,12 @@
 @section('content_header')
 
 
-
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Test IST</b> <small>Mengelola Test IST</small>
+        <b>Tambah User Group</b> <small>Mengelola User Group</small>
     </h3>
     <br />
     @if (session('msg'))
@@ -22,6 +21,16 @@
         </div>
     @endif
     <div class="card border border-dark">
+        <div class="card-header bg-dark clearfix">
+            <h5 class="mb-0 float-left">
+                Form Tambah User Group
+            </h5>
+            <div class="float-right">
+                <button onclick="location.href='{{ url('setusergroup') }}'" name="Find" class="btn btn-sm btn-info"
+                    title="Back"><i class="fa fa-angle-left"></i> Kembali</button>
+            </div>
+        </div>
+
         @if (Session::get('Success'))
             <div class="alert alert-success">
                 {{ Session::get('success') }}
@@ -34,27 +43,27 @@
             </div>
         @endif
 
-        <form method="post" action="/tesist-prosestambah" enctype="multipart/form-data">
+        <form method="post" action="/setusergroup-prosestambah" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="row form-group">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <a class="text-dark">No Pendaftaran<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="namaklien" id="namaklien"
-                                value="{{ old('namaklien') }}" />
+                            <a class="text-dark">Tingkatan<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="tingkatan" id="tingkatan"
+                                value="{{ old('tingkatan') }}" />
                             <span style="color:red">
-                                @error('namaklien')
+                                @error('tingkatan')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
                         <div class="form-group">
-                            <a class="text-dark">Password<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="password" name="kategorites" id="kategorites"
-                                value="{{ old('kategorites') }}" />
+                            <a class="text-dark">Nama<a class='red'> *</a></a>
+                            <input class="form-control input-bb" type="text" name="nama" id="nama"
+                                value="{{ old('nama') }}" />
                             <span style="color:red">
-                                @error('kategorites')
+                                @error('nama')
                                     {{ $message }}
                                 @enderror
                             </span>

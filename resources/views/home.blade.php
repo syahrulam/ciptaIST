@@ -168,27 +168,29 @@ Dashboard
                                 <?php   }
                             if($menu['id_menu']==42){
                     ?>
-                                <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('data-tes') }}'"> <i class="fa fa-angle-right"></i>
-                                    Tes IST</li>
+                                <li class="list-group-item main-menu-item" onClick="location.href='{{ route('tesist') }}'">
+                                    <i class="fa fa-angle-right"></i>
+                                    Tes IST
+                                </li>
                                 <?php   }
                             if($menu['id_menu']==42){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('data-tes') }}'"> <i class="fa fa-angle-right"></i>
-                                    Set User & User Group</li>
+                                    onClick="location.href='{{ route('system-user-group') }}'"> <i
+                                        class="fa fa-angle-right"></i>
+                                    Set Pengguna & Group Pengguna</li>
                                 <?php   }
                             if($menu['id_menu']==41){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('tes-ist') }}'"> <i class="fa fa-angle-right"></i>
+                                    onClick="location.href='{{ route('hasiltesist') }}'"> <i class="fa fa-angle-right"></i>
                                     Hasil Tes IST</li>
                                 <?php   }
                             if($menu['id_menu']==42){
                     ?>
                                 <li class="list-group-item main-menu-item"
-                                    onClick="location.href='{{ route('peserta-tes-ist') }}'"> <i
-                                        class="fa fa-angle-right"></i> Peserta Tes IST</li>
+                                    onClick="location.href='{{ route('system-user') }}'"> <i class="fa fa-angle-right"></i>
+                                    Pengguna</li>
                                 <?php 
                          }
                     } 

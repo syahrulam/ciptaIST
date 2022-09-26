@@ -20,6 +20,7 @@ use App\Http\Controllers\IstPreferensi\IstilahGeController;
 use App\Http\Controllers\IstPreferensi\IstilahIqController;
 use App\Http\Controllers\TesPreferensi\TesPreferensiController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransServiceRequisitionController;
 use App\Http\Controllers\TransServiceDispositionController;
 use App\Http\Controllers\TransServiceDispositionApprovalController;
@@ -199,6 +200,23 @@ Route::post('/hasiltesist/{id}/edit-hasiltesistproses', [DataPreferensiControlle
 Route::get('/hasiltesist/{id}/hapus-hasiltesist', [DataPreferensiController::class, 'hapushasiltesist'])->name('hapus-hasiltesist');
 Route::get('/hasiltesist/cari-hasiltesist', [DataPreferensiController::class, 'carihasiltesist'])->name('/hasiltesist/cari-hasiltesist');
 //hasil tes ist end
+
+//tes ist start
+Route::get('/tesist', [DataPreferensiController::class, 'tesist'])->name('tesist');
+Route::post('/tesist-prosestambah', [DataPreferensiController::class, 'prosestambahtesist'])->name('tesist-prosestambah');
+//tes ist end
+
+// //usergroup start
+// Route::get('/setusergroup', [DataPreferensiController::class, 'setusergroup'])->name('setusergroup');
+// Route::get('/setusergroup-tambah', [DataPreferensiController::class, 'tambahsetusergroup'])->name('tambah-setusergroup');
+// Route::post('/setusergroup-prosestambah', [DataPreferensiController::class, 'prosestambahsetusergroup'])->name('setusergroup-prosestambah');
+// Route::get('/setusergroup/{id}/edit-setusergroup', [DataPreferensiController::class, 'editsetusergroup'])->name('edit-setusergroup');
+// Route::post('/setusergroup/{id}/edit-setusergroupproses', [DataPreferensiController::class, 'editsetusergroupproses'])->name('edit-setusergroupproses');
+// Route::get('/setusergroup/{id}/hapus-setusergroup', [DataPreferensiController::class, 'hapussetusergroup'])->name('hapus-setusergroup');
+// Route::get('/setusergroup/cari-setusergroup', [DataPreferensiController::class, 'carisetusergroup'])->name('/setusergroup/cari-setusergroup');
+// //usergroup end
+// route profile
+Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profile');
 
 Route::post('/trans-service-requisition/filter', [TransServiceRequisitionController::class, 'filter'])->name('filter-service-requisition');
 Route::get('/trans-service-requisition/add/{service_requisition_id}', [TransServiceRequisitionController::class, 'addTransServiceRequisition'])->name('add-service-requisition');
