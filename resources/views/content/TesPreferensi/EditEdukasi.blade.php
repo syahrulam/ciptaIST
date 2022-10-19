@@ -33,14 +33,14 @@
         </div>
 
         <div class="card-body">
-            @foreach ($tb_edukasi as $p)
+            @foreach ($core_education as $p)
                 <form action="/edukasi/{id}/edit-edukasiproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->education_id }}"> <br />
                     <div class="form-group">
                         <label for="edukasi">Nama Edukasi</label>
                         <input type="text" required="required" class="form-control" name="namaedukasi"
-                            value="{{ $p->namaedukasi }}">
+                            value="{{ $p->education_name }}">
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align  : right !important;">

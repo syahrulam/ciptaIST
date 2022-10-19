@@ -92,7 +92,7 @@ Dashboard
                                     onClick="location.href='{{ route('service-general-print') }}'"> <i
                                         class="fa fa-angle-right"></i> Klasifikasi IQ</li>
                                 <?php   }
-                            if($menu['id_menu']==6){
+                            if($menu['id_menu']==8){
                         ?>
                                 <li class="list-group-item main-menu-item"
                                     onClick="location.href='{{ route('dashboard-review') }}'"> <i
@@ -115,7 +115,13 @@ Dashboard
                         <div class="card-body">
                             <ul class="list-group">
                                 <?php foreach($menus as $menu){
-                        if($menu['id_menu']==32){
+                        if($menu['id_menu']==61){
+                    ?>
+                                <li class="list-group-item main-menu-item"
+                                    onClick="location.href='{{ route('userview') }}'"> <i class="fa fa-angle-right"></i>
+                                    User View</li>
+                                <?php   }
+                        if($menu['id_menu']==51){
                     ?>
                                 <li class="list-group-item main-menu-item"
                                     onClick="location.href='{{ route('pertanyaan') }}'"> <i class="fa fa-angle-right"></i>

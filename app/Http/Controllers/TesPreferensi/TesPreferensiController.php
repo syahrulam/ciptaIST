@@ -16,6 +16,7 @@ use App\Models\TransServiceRequisitionTerm;
 use App\Models\TransServiceRequisitionParameter;
 use App\Models\User;
 use App\Models\SystemLogUser;
+use App\Models\Pertanyaan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -49,12 +50,25 @@ class TesPreferensiController extends Controller
 
     // Start Function Pertanyaan
     public function pertanyaan(){
-        $tb_pertanyaan = DB::table('tb_pertanyaan')->get();
+
+        $categories = DB::table('categories')->get();
+        $questions = DB::table('questions')->get();
         $return = [
-            'tb_pertanyaan'
+            'categories',
+            'questions',
         ];
+
+        // $core_ist = DB::connection('mysqll')->table('core_ist')->get();
+        // $core_question = DB::connection('mysqll')->table('core_question')->get();
+        // $core_question_answer = DB::connection('mysqll')->table('core_question_answer')->get();
+        // $return = [
+        //     'core_ist',
+        //     'core_question',
+        //     'core_question_answer',
+        // ];
         return view('content/TesPreferensi/Pertanyaan', compact($return));
     }
+
     public function tambahpertanyaan(){
         
         return view('content/TesPreferensi/TambahPertanyaan');
@@ -63,32 +77,61 @@ class TesPreferensiController extends Controller
     public function prosestambahpertanyaan(Request $request)
     {
         $request->validate([
-            'kodeist'=>'required',
-            'nopertanyaan'=>'required',
-            'komentarpertanyaan'=>'required',
+            'kodeIST'=>'required',
+            'nomorPertanyaan'=>'required',
+            'komentarPertanyaan'=>'required',
             'pertanyaan'=>'required'
-
+            
         ]);
 
-        $query = DB::table('tb_pertanyaan')->insert([
-            'kodeIST'=>$request->input('kodeist'),
-            'nomorPertanyaan'=>$request->input('nopertanyaan'),
-            'komentarPertanyaan'=>$request->input('komentarpertanyaan'),
-            'pertanyaan'=>$request->input('pertanyaan')
+        $query1 =DB::connection('mysqll')->table('core_ist')->insert([
+            'ist_code'=>$request->input('kodeIST')
 
         ]);
+        
+        $query2 =DB::connection('mysqll')->table('core_question')->insert([
+            'question_no'=>$request->input('nomorPertanyaan'),
+            'question_remark'=>$request->input('komentarPertanyaan'),
+            'question_title'=>$request->input('pertanyaan')
 
-        if($query){
-
-            return back()->with('success', 'Data berhasil ditambahkan');
-         }else{
-            return back()->with('fail', 'Data gagal ditambahkan');
-         }
+        ]);
     }
 
     public function detailPertanyaan($id){
-        $tb_pertanyaan = DB::table('tb_pertanyaan')->where('ID',$id)->get();
-        return view('content/TesPreferensi/DetailPertanyaan',['tb_pertanyaan'=>$tb_pertanyaan]);
+
+        // DB::table('trx_bookingkursi')
+        //     ->select('trx_bookingkursi.*', 'ref_direktorat.nama as direktorat', 'ref_fungsi.nama as fungsi', 'm_kursi.kode as kodeKursi', 'm_kursi.nama')
+        //     ->join('ref_direktorat', 'ref_direktorat.ID', 'trx_bookingkursi.direktorat')
+        //     ->join('ref_fungsi', 'ref_fungsi.ID', 'trx_bookingkursi.fungsi')
+        //     ->join('m_kursi', 'm_kursi.ID', 'trx_bookingkursi.kursi')
+        //     ->where('trx_bookingkursi.ID', $id)
+        //     ->get();
+
+        $core_ist = DB::connection('mysqll')->table('core_question')
+            ->select('core_question.*', 'core_ist.ist_nama as coreist')
+            ->join('core_ist', 'core_ist.ist_id', 'core_question.ist_nama')
+            ->where('core_question.question_id', $id)
+            ->get();
+
+            $return = ['core_ist'];
+
+            return view('content/TesPreferensi/DetailPertanyaan', compact($return));
+
+        // $core_ist = DB::connection('mysqll')->table('core_ist')->where('ist_id',$id)->get();
+        // $core_question = DB::connection('mysqll')->table('core_question')->where('question_id',$id)->get();
+        // $core_question_answer = DB::connection('mysqll')->table('core_question_answer')->where('question_id',$id)->get();
+        // $return = [
+        //     'core_ist',
+        //     'core_question',
+        //     'core_question_answer',
+        // ];
+
+        
+        // $tb_pertanyaan = DB::table('tb_pertanyaan')->where('ID',$id)->get();
+        // return view('content/TesPreferensi/DetailPertanyaan',['tb_pertanyaan'=>$tb_pertanyaan]);
+        
+        // $core_question_answer = DB::connection('mysqll')->table('core_question_answer')->where('question_id',$id)->get();
+        // return view('content/TesPreferensi/DetailPertanyaan',['core_question_answer'=>$core_question_answer]);
     }
 
     public function editPertanyaan($id){
@@ -119,19 +162,19 @@ class TesPreferensiController extends Controller
     public function caripertanyaan(Request $request)
 	{
 		$cari = $request->cari;
- 
-		$tb_pertanyaan = DB::table('tb_pertanyaan')
-		->where('ID','like',"%".$cari."%")
+        $core_ist = DB::connection('mysqll')->table('core_ist')
+		->where('ist_code','like',"%".$cari."%")
 		->paginate();
  
-		return view('content/TesPreferensi/Pertanyaan',['tb_pertanyaan'=>$tb_pertanyaan]);
+		return view('content/TesPreferensi/Pertanyaan',['core_ist'=>$core_ist]);
  
 	}
+
     // End Function Pertanyaan
 
     // Start Type User Function
     public function user(){
-        $system_user_group = DB::table('system_user_group')->get();
+        $system_user_group = DB::connection('mysqll')->table('system_user_group')->get();
         $return = [
             'system_user_group'
         ];
@@ -149,7 +192,7 @@ class TesPreferensiController extends Controller
             'namatipeuser'=>'required'
         ]);
 
-        $query = DB::table('system_user_group')->insert([
+        $query = DB::connection('mysqll')->table('system_user_group')->insert([
             'user_group_name'=>$request->input('namatipeuser')
         ]);
 
@@ -163,13 +206,13 @@ class TesPreferensiController extends Controller
 
     public function edituser($id){
 
-        $system_user_group = DB::table('system_user_group')->where('user_group_id',$id)->get();
+        $system_user_group = DB::connection('mysqll')->table('system_user_group')->where('user_group_id',$id)->get();
         return view('content/TesPreferensi/EditTipeUser',['system_user_group'=>$system_user_group]);
     }
 
     public function edituserproses(Request $request){
 
-	    DB::table('system_user_group')->where('user_group_id',$request->id)->update([
+	    DB::connection('mysqll')->table('system_user_group')->where('user_group_id',$request->id)->update([
             'user_group_name'=>$request->namatipeuser
 	]);
 
@@ -178,7 +221,7 @@ class TesPreferensiController extends Controller
 
     public function hapususer($id)
     {
-        DB::table('system_user_group')->where('user_group_id',$id)->delete();
+        DB::connection('mysqll')->table('system_user_group')->where('user_group_id',$id)->delete();
 
 	    return redirect('/user');
     }
@@ -187,7 +230,7 @@ class TesPreferensiController extends Controller
 	{
 		$cari = $request->cari;
  
-		$system_user_group = DB::table('system_user_group')
+		$system_user_group = DB::connection('mysqll')->table('system_user_group')
 		->where('user_group_name','like',"%".$cari."%")
 		->paginate();
  
@@ -200,9 +243,9 @@ class TesPreferensiController extends Controller
     // Start edukasi Function
 
     public function edukasi(){
-        $tb_edukasi = DB::table('tb_edukasi')->get();
+        $core_education = DB::connection('mysqll')->table('core_education')->get();
         $return = [
-            'tb_edukasi'
+            'core_education'
         ];
         return view('content/TesPreferensi/Edukasi', compact($return));
     }
@@ -217,9 +260,8 @@ class TesPreferensiController extends Controller
         $request->validate([
             'namaedukasi'=>'required'
         ]);
-
-        $query = DB::table('tb_edukasi')->insert([
-            'namaedukasi'=>$request->input('namaedukasi')
+        $query = DB::connection('mysqll')->table('core_education')->insert([
+            'education_name'=>$request->input('namaedukasi')
         ]);
 
         if($query){
@@ -232,14 +274,14 @@ class TesPreferensiController extends Controller
 
     public function editedukasi($id){
 
-        $tb_edukasi = DB::table('tb_edukasi')->where('id',$id)->get();
-        return view('content/TesPreferensi/EditEdukasi',['tb_edukasi'=>$tb_edukasi]);
+        $core_education = DB::connection('mysqll')->table('core_education')->where('education_id',$id)->get();
+        return view('content/TesPreferensi/EditEdukasi',['core_education'=>$core_education]);
     }
 
     public function editedukasiproses(Request $request){
 
-	    DB::table('tb_edukasi')->where('id',$request->id)->update([
-            'namaedukasi'=>$request->namaedukasi
+	    DB::connection('mysqll')->table('core_education')->where('id',$request->id)->update([
+            'education_name'=>$request->namaedukasi
 	]);
     
 
@@ -248,7 +290,7 @@ class TesPreferensiController extends Controller
 
     public function hapusedukasi($id)
     {
-        DB::table('tb_edukasi')->where('id',$id)->delete();
+        DB::connection('mysqll')->table('core_education')->where('education_id',$id)->delete();
 
 	    return redirect('/edukasi');
     }
@@ -257,7 +299,7 @@ class TesPreferensiController extends Controller
 	{
 		$cari = $request->cari;
  
-		$tb_edukasi = DB::table('tb_edukasi')
+		$tb_edukasi = DB::connection('mysqll')->table('core_education')
 		->where('namaedukasi','like',"%".$cari."%")
 		->paginate();
  
@@ -271,9 +313,9 @@ class TesPreferensiController extends Controller
     // Start kategori Function
 
     public function kategori(){
-        $tb_kategori = DB::table('tb_kategori')->get();
+        $core_test_category = DB::connection('mysqll')->table('core_test_category')->get();
         $return = [
-            'tb_kategori'
+            'core_test_category'
         ];
         return view('content/TesPreferensi/KategoriUjian', compact($return));
     }
@@ -289,8 +331,8 @@ class TesPreferensiController extends Controller
             'namakategori'=>'required'
         ]);
 
-        $query = DB::table('tb_kategori')->insert([
-            'namakategori'=>$request->input('namakategori')
+        $query = DB::connection('mysqll')->table('core_test_category')->insert([
+            'test_category_name'=>$request->input('namakategori')
         ]);
 
         if($query){
@@ -303,15 +345,15 @@ class TesPreferensiController extends Controller
 
     public function editkategori($id){
 
-        $tb_kategori = DB::table('tb_kategori')->where('id',$id)->get();
+        $core_test_category = DB::connection('mysqll')->table('core_test_category')->where('test_category_id',$id)->get();
         
-        return view('content/TesPreferensi/EditKategori',['tb_kategori'=>$tb_kategori]);
+        return view('content/TesPreferensi/EditKategori',['core_test_category'=>$core_test_category]);
     }
 
     public function editkategoriproses(Request $request){
 
-	    DB::table('tb_kategori')->where('id',$request->id)->update([
-            'namakategori'=>$request->namakategori
+	    DB::connection('mysqll')->table('core_test_category')->where('test_category_id',$request->id)->update([
+            'test_category_name'=>$request->namakategori
 	]);
     
 
@@ -320,7 +362,7 @@ class TesPreferensiController extends Controller
 
     public function hapuskategori($id)
     {
-        DB::table('tb_kategori')->where('id',$id)->delete();
+        DB::connection('mysqll')->table('core_test_category')->where('test_category_id',$id)->delete();
 
 	    return redirect('/kategori-ujian');
     }
@@ -329,11 +371,11 @@ class TesPreferensiController extends Controller
 	{
 		$cari = $request->cari;
  
-		$tb_kategori = DB::table('tb_kategori')
-		->where('namakategori','like',"%".$cari."%")
+		$core_test_category = DB::connection('mysqll')->table('core_test_category')
+		->where('test_category_name','like',"%".$cari."%")
 		->paginate();
  
-		return view('content/TesPreferensi/KategoriUjian',['tb_kategori'=>$tb_kategori]);
+		return view('content/TesPreferensi/KategoriUjian',['core_test_category'=>$core_test_category]);
  
 	}
 
@@ -343,9 +385,9 @@ class TesPreferensiController extends Controller
 
     
     public function klien(){
-        $tb_klien = DB::table('tb_klien')->get();
+        $core_client = DB::connection('mysqll')->table('core_client')->get();
         $return = [
-            'tb_klien'
+            'core_client'
         ];
         return view('content/TesPreferensi/Klien', compact($return));
     }
@@ -365,12 +407,12 @@ class TesPreferensiController extends Controller
             'kontakperson'=>'required'
         ]);
 
-        $query = DB::table('tb_klien')->insert([
-            'namaklien'=>$request->input('namaklien'),
-            'nomorklien'=>$request->input('nomorklien'),
-            'nomorkliendua'=>$request->input('nomorkliendua'),
-            'nomorrumah'=>$request->input('nomorrumah'),            
-            'kontakperson'=>$request->input('kontakperson')
+        $query = DB::connection('mysqll')->table('core_client')->insert([
+            'client_name'=>$request->input('namaklien'),
+            'client_mobile_phone1'=>$request->input('nomorklien'),
+            'client_mobile_phone2'=>$request->input('nomorkliendua'),
+            'client_home_phone'=>$request->input('nomorrumah'),            
+            'client_contact_person'=>$request->input('kontakperson')
         ]);
 
         if($query){
@@ -383,14 +425,18 @@ class TesPreferensiController extends Controller
 
     public function editklien($id){
 
-        $tb_klien = DB::table('tb_klien')->where('id',$id)->get();
-        return view('content/TesPreferensi/EditKlien',['tb_klien'=>$tb_klien]);
+        $core_client = DB::connection('mysqll')->table('core_client')->where('client_id',$id)->get();
+        return view('content/TesPreferensi/EditKlien',['core_client'=>$core_client]);
     }
 
     public function editklienproses(Request $request){
 
-	    DB::table('tb_klien')->where('id',$request->id)->update([
-            'namaklien'=>$request->namaklien
+	    DB::connection('mysqll')->table('core_client')->where('client_id',$request->id)->update([
+            'client_name'=>$request->namaklien,
+            'client_mobile_phone1'=>$request->nomorklien,
+            'client_mobile_phone2'=>$request->nomorkliendua,
+            'client_home_phone'=>$request->nomorrumah,            
+            'client_contact_person'=>$request->kontakperson
 	]);
     
 
@@ -399,7 +445,7 @@ class TesPreferensiController extends Controller
 
     public function hapusklien($id)
     {
-        DB::table('tb_klien')->where('id',$id)->delete();
+        DB::connection('mysqll')->table('core_client')->where('client_id',$id)->delete();
 
 	    return redirect('/klien');
     }
@@ -408,11 +454,11 @@ class TesPreferensiController extends Controller
 	{
 		$cari = $request->cari;
  
-		$tb_klien = DB::table('tb_klien')
-		->where('namaklien','like',"%".$cari."%")
+		$core_client = DB::connection('mysqll')->table('core_client')
+		->where('client_name','like',"%".$cari."%")
 		->paginate();
  
-		return view('content/TesPreferensi/Klien',['tb_klien'=>$tb_klien]);
+		return view('content/TesPreferensi/Klien',['core_client'=>$core_client]);
  
 	}
 

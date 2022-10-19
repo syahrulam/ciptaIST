@@ -49,68 +49,69 @@
                 {{ Session::get('Fail') }}
             </div>
         @endif
-
-        <form method="post" action="/edit-ist/{{ $data->id }}" enctype="multipart/form-data">
-            @csrf
+        <form method="post" action="/ist/{id}/edit-istproses" enctype="multipart/form-data">
+            {{ csrf_field() }}
             <div class="card-body">
-                <div class="row form-group">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Kode IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
-                                value="{{ $data->kodeist }}" />
-                            <span style="color:red">
-                                @error('kodeist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
+                @foreach ($core_ist as $p)
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a class="text-dark">Kode IST<a class='red'> *</a></a>
+                                <input class="form-control input-bb" type="text" name="kodeist" id="kodeIst"
+                                    value="{{ $p->ist_code }}">
+                                <span style="color:red">
+                                    @error('ist_code')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a class="text-dark">Nama IST<a class='red'> *</a></a>
+                                <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
+                                    value="{{ $p->ist_name }}">
+                                <span style="color:red">
+                                    @error('namaist')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a class="text-dark">Durasi IST<a class='red'> *</a></a>
+                                <input class="form-control input-bb" type="text" name="durasiist" id="durasiIst"
+                                    value="{{ $p->ist_duration }}">
+                                <span style="color:red">
+                                    @error('durasiist')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
+                                <input class="form-control input-bb" type="text" name="deskripsiist" id="deskripsiIst"
+                                    value="{{ $p->ist_description }}">
+                                <span style="color:red">
+                                    @error('deskripsiist')
+                                        {{ $message }}
+                                    @enderror
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-actions float-right">
+                                <button type="reset" name="Reset" class="btn btn-danger"
+                                    onClick="window.location.reload();"><i class="fa fa-times"></i> Batal</button>
+                                <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary"
+                                    title="Save"><i class="fa fa-check"></i> Simpan</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Nama IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="namaist" id="namaIst"
-                                value="{{ old('namaist') }}" />
-                            <span style="color:red">
-                                @error('namaist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Durasi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="durasiist" id="durasiIst"
-                                value="{{ old('durasiist') }}" />
-                            <span style="color:red">
-                                @error('durasiist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <a class="text-dark">Deskripsi IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="deskripsiist" id="deskripsiIst"
-                                value="{{ old('deskripsiist') }}" />
-                            <span style="color:red">
-                                @error('deskripsiist')
-                                    {{ $message }}
-                                @enderror
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-actions float-right">
-                            <button type="reset" name="Reset" class="btn btn-danger"
-                                onClick="window.location.reload();"><i class="fa fa-times"></i> Batal</button>
-                            <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary" title="Save"><i
-                                    class="fa fa-check"></i> Simpan</button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </form>
         {{-- @section('scripts')

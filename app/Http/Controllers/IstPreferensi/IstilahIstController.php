@@ -46,41 +46,29 @@ class IstilahIstController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
-        $getIstIST = DB::table('core_service_parameter')->get();
+ public function index(){
+        $core_ist = DB::connection('mysqll')->table('core_ist')->get();
+        $core_ist_norm = DB::connection('mysqll')->table('core_ist_norm')->get();
         $return = [
-            'getIstIST'
+            'core_ist',
+            'core_ist_norm'
         ];
-        return view('content/IstilahIST/IstilahIST', compact($return));
+        return view('content\IstilahIST\IstilahIST', compact($return));
     }
     public function tambahistilahist()
     {
-        $coreservice = CoreService::where('data_state', 0)
-        ->get();
-
-        return view('content/IstilahIST/TambahIstilahIST',compact('coreservice'));
+        return view('content\IstilahIST\TambahIstilahIST');
     }
 
     public function addprosesistilahist(Request $request)
     {
         $request->validate([
             'kodeist'=>'required',
-            'usianormamulai'=>'required',
-            'usianormaakhir'=>'required',
-            'istrw'=>'required',
-            'istsw'=>'required',
-            'normatotalmulai'=>'required',
-            'normatotalakhir'=>'required',
         ]);
 
-        $query = DB::table('core_service_parameter')->insert([
+        $query = DB::connection('mysqll')->table('core_ist')->insert([
             'service_parameter_id'=>$request->input('kodeist'),
-            'service_id'=>$request->input('usianormamulai'),
-            'service_parameter_no'=>$request->input('usianormaakhir'),
-            'service_parameter_description'=>$request->input('istrw'),
-            'data_state'=>$request->input('istsw'),
-            'created_id'=>$request->input('normatotalmulai'),
-            'updated_id'=>$request->input('normatotalakhir')
+
         ]);
 
         if($query){
@@ -91,8 +79,25 @@ class IstilahIstController extends Controller
          }
     }
 
-        public function editistilahist()
+    public function editistilahist($id){
+
+        $core_ist = DB::connection('mysqll')->table('core_ist')->where('ist_id',$id)->get();
+        return view('content\IstilahIST\EditIstilahIST',['core_ist'=>$core_ist]);
+    }
+
+    public function editistilahistproses(Request $request){
+
+	    DB::connection('mysqll')->table('core_ist')->where('ist_id',$request->id)->update([
+            'ist_code'=>$request->kodeist
+	]);
+
+	return redirect('/istilah-ist');
+    }
+
+    public function hapusist($id)
     {
-        return view('content\IstilahIST\EditIstilahIST');
+        DB::connection('mysqll')->table('core_ist')->where('ist_id',$id)->delete();
+
+	    return redirect('/istilah-ist');
     }
 };

@@ -47,9 +47,9 @@ class IstController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIst = DB::table('trans_service_requisition')->get();
+        $core_ist = DB::connection('mysqll')->table('core_ist')->get();
         $return = [
-            'getIst'
+            'core_ist'
         ];
         return view('content/IST/IstHal', compact($return));
     }
@@ -67,11 +67,11 @@ class IstController extends Controller
             'deskripsiist'=>'required'
         ]);
 
-        $query = DB::table('trans_service_requisition')->insert([
-            'service_requisition_no'=>$request->input('kodeist'),
-            'service_requisition_name'=>$request->input('namaist'),
-            'delete_remark'=>$request->input('durasiist'),
-            'service_requisition_status'=>$request->input('deskripsiist')
+        $query = DB::connection('mysqll')->table('core_ist')->insert([
+            'ist_code'=>$request->input('kodeist'),
+            'ist_name'=>$request->input('namaist'),
+            'ist_duration'=>$request->input('durasiist'),
+            'ist_description'=>$request->input('deskripsiist')
         ]);
 
         if($query){
@@ -82,26 +82,28 @@ class IstController extends Controller
          }
     }
 
-    public function editist($id)
-    {
-        $data = TransServiceRequisition::find($id);
-        // dd($data); 
+    public function editist($id){
 
-        return view('content\IST\EditIst', compact('data'));
+        $core_ist = DB::connection('mysqll')->table('core_ist')->where('ist_id',$id)->get();
+        return view('content\IST\EditIst',['core_ist'=>$core_ist]);
     }
 
-        public function editistprosess($id)
-    {
-        $data = TransServiceRequisition::find($id);
-        $data->update($request->all());
-        // dd($data); 
+    public function editistproses(Request $request){
 
-        return redirect()->route('ist');
+	    DB::connection('mysqll')->table('core_ist')->where('ist_id',$request->id)->update([
+            'ist_code'=>$request->kodeist,
+            'ist_name'=>$request->namaist,
+            'ist_duration'=>$request->durasiist,
+            'ist_description'=>$request->deskripsiist
+	]);
+
+	return redirect('/ist');
     }
 
-    public function deleteist($id)
+    public function hapusist($id)
     {
-        $data = TransServiceRequisition::find($id);
-        $data->delete();
+        DB::connection('mysqll')->table('core_ist')->where('ist_id',$id)->delete();
+
+	    return redirect('/ist');
     }
 };

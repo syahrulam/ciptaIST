@@ -47,18 +47,15 @@ class IstilahGeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getGe = DB::table('trans_service_disposition')->get();
+        $core_norm_ge =  DB::connection('mysqll')->table('core_norm_ge')->get();
         $return = [
-            'getGe'
+            'core_norm_ge'
         ];
         return view('content/IstilahGE/IstilahGE', compact($return));
     }
     public function tambahistilahge()
     {
-        $coreservice = CoreService::where('data_state', 0)
-        ->get();
-
-        return view('content/IstilahGE/TambahIstilahGE',compact('coreservice'));
+        return view('content/IstilahGE/TambahIstilahGE');
     }
 
     public function addprosesistilahge(Request $request)
@@ -69,10 +66,10 @@ class IstilahGeController extends Controller
             'nilaige'=>'required'
         ]);
 
-        $query = DB::table('trans_service_disposition')->insert([
-            'service_id'=>$request->input('totalgeawal'),
-            'section_id'=>$request->input('totalgeakhir'),
-            'approved_id'=>$request->input('nilaige')
+        $query = DB::connection('mysqll')->table('core_norm_ge')->insert([
+            'norm_ge_total_start'=>$request->input('totalgeawal'),
+            'norm_ge_total_end'=>$request->input('totalgeakhir'),
+            'norm_ge_value'=>$request->input('nilaige')
         ]);
 
         if($query){
@@ -83,9 +80,29 @@ class IstilahGeController extends Controller
          }
     }
 
-        public function editistilahge()
+    public function editistilahge($id)
     {
-        return view('content\IstilahGe\EditIstilahGe');
+
+        $core_norm_ge = DB::connection('mysqll')->table('core_norm_ge')->where('norm_ge_id',$id)->get();
+        return view('content\IstilahGE\EditIstilahGe',['core_norm_ge'=>$core_norm_ge]);
+    }
+
+    public function editistilahgeproses(Request $request){
+
+	    DB::connection('mysqll')->table('core_norm_ge')->where('norm_ge_id',$request->id)->update([
+            'norm_ge_total_start'=>$request->totalgeawal,
+            'norm_ge_total_end'=>$request->totalgeakhir,
+            'norm_ge_value'=>$request->nilaige
+	]);
+
+	return redirect('/istilah-ge');
+    }
+
+    public function hapusistilahge($id)
+    {
+        DB::connection('mysqll')->table('core_norm_ge')->where('norm_ge_id',$id)->delete();
+
+	    return redirect('/istilah-ge');
     }
 
 };

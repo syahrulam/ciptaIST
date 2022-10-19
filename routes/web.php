@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\SystemUserGroupController;
 use App\Http\Controllers\CoreSectionController;
@@ -12,12 +12,14 @@ use App\Http\Controllers\CoreServiceGeneralParameterController;
 use App\Http\Controllers\DashboardReviewController;
 use App\Http\Controllers\PrintServiceController;
 use App\Http\Controllers\PrintServiceGeneralController;
+use App\Http\Controllers\UserController\UserController;
 use App\Http\Controllers\ScanQRController;
 use App\Http\Controllers\DataPreferensi\DataPreferensiController;
 use App\Http\Controllers\IstPreferensi\IstController;
 use App\Http\Controllers\IstPreferensi\IstilahIstController;
 use App\Http\Controllers\IstPreferensi\IstilahGeController;
 use App\Http\Controllers\IstPreferensi\IstilahIqController;
+use App\Http\Controllers\IstPreferensi\GesamtIstController;
 use App\Http\Controllers\TesPreferensi\TesPreferensiController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +35,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Auth::routes();
 
@@ -86,34 +89,45 @@ Route::post('/service/process-edit-service', [CoreServiceController::class, 'pro
 Route::get('/ist', [IstController::class, 'index'])->name('ist');
 Route::get('/ist-tambah', [IstController::class, 'tambahist'])->name('ist-tambah');
 Route::post('/ist-prosestambah', [IstController::class, 'addprosesist'])->name('ist-prosestambah');
-Route::get('/halaman-edit-ist/{id}', [IstController::class, 'editist'])->name('halaman-edit-ist');
-Route::post('/edit-ist/{id}', [IstController::class, 'editistprosess'])->name('edit-ist');
-Route::get('/hapus-ist/{id}', [IstController::class, 'deleteist'])->name('delete-ist');
+Route::get('/ist/{id}/edit-ist', [IstController::class, 'editist'])->name('edit-ist');
+Route::post('/ist/{id}/edit-istproses', [IstController::class, 'editistprosess'])->name('edit-istproses');
+Route::get('/ist/{id}/hapus-ist', [IstController::class, 'hapusist'])->name('hapus-ist');
 // ist end
 
 //istilah ist start
 Route::get('/istilah-ist', [IstilahIstController::class, 'index'])->name('istilah-ist');
 Route::get('/istilah-ist-tambah', [IstilahIstController::class, 'tambahistilahist'])->name('istilah-ist-tambah');
-Route::post('/istilah-ist-prosestambah', [IstilahIstController::class, 'addproses'])->name('istilah-ist-prosestambah');
-Route::get('/halaman-edit-istilah-ist', [IstilahIstController::class, 'editistilahist'])->name('halaman-edit-istilah-ist');
+Route::post('/istilah-ist-prosestambah', [IstilahIstController::class, 'addprosesistilahist'])->name('istilah-ist-prosestambah');
+Route::get('/istilah-ist/{id}/istilah-ist', [IstilahIstController::class, 'editistilahist'])->name('edit-istilah-ist');
+Route::post('/istilah-ist/{id}/edit-istilah-istproses', [IstilahIstController::class, 'editistilahistprosess'])->name('edit-istilah-istproses');
+Route::get('/istilah-ist/{id}/hapus-istilah-ist', [IstilahIstController::class, 'hapusistilahist'])->name('hapus-istilah-ist');
 //istilah ist end
 
 //istilah ge start
 Route::get('/istilah-ge', [IstilahGeController::class, 'index'])->name('istilah-ge');
 Route::get('/istilah-ge-tambah', [IstilahGeController::class, 'tambahistilahge'])->name('istilah-ge-tambah');
 Route::post('/istilah-ge-prosestambah', [IstilahGeController::class, 'addprosesistilahge'])->name('istilah-ge-prosestambah');
-Route::get('/halaman-edit-istilah-ge', [IstilahGeController::class, 'editistilahge'])->name('halaman-edit-istilah-ge');
+Route::get('/istilah-ge/{id}/edit-istilah-ge', [IstilahGeController::class, 'editistilahge'])->name('edit-istilah-ge');
+Route::post('/istilah-ge/{id}/edit-istilah-geproses', [IstilahGeController::class, 'editistilahgeproses'])->name('edit-istilah-geproses');
+Route::get('/istilah-ge/{id}/hapus-istilah-ge', [IstilahGeController::class, 'hapusistilahge'])->name('hapus-istilah-ge');
 //istilah ge end
 
 //istilah iq start
 Route::get('/istilah-iq', [IstilahIqController::class, 'index'])->name('istilah-iq');
 Route::get('/istilah-iq-tambah', [IstilahIqController::class, 'tambahistilahiq'])->name('istilah-iq-tambah');
 Route::post('/istilah-iq-prosestambah', [IstilahIqController::class, 'addprosesistilahiq'])->name('istilah-iq-prosestambah');
-Route::get('/halaman-edit-istilah-iq', [IstilahIqController::class, 'editistilahiq'])->name('halaman-edit-istilah-iq');
+Route::get('/istilah-iq/{id}/edit-istilah-iq', [IstilahIqController::class, 'editistilahiq'])->name('edit-istilah-iq');
+Route::post('/istilah-iq/{id}/edit-istilah-iqproses', [IstilahIqController::class, 'editistilahiqproses'])->name('edit-istilah-iqproses');
+Route::get('/istilah-iq/{id}/hapus-istilah-iq', [IstilahIqController::class, 'hapusistilahiq'])->name('hapus-istilah-iq');
 //istilah iq end
 
 //gesamt
-Route::get('/gesamt', [GesamtController::class, 'index'])->name('gesamt');
+Route::get('/gesamt', [GesamtIstController::class, 'index'])->name('gesamt');
+Route::get('/gesamt-tambah', [GesamtIstController::class, 'tambahgesamt'])->name('gesamt-tambah');
+Route::post('/gesamt-prosestambah', [GesamtIstController::class, 'addprosesgesamt'])->name('gesamt-prosestambah');
+Route::get('/gesamt/{id}/edit-gesamt', [GesamtIstController::class, 'editgesamt'])->name('edit-gesamt');
+Route::post('/gesamt/{id}/edit-gesamtproses', [GesamtIstController::class, 'editgesamtproses'])->name('edit-gesamtproses');
+Route::get('/gesamt/{id}/hapus-gesamt', [GesamtIstController::class, 'hapusgesamt'])->name('hapus-gesamt');
 //istilah iq end
 
 //klasifikasi
@@ -139,7 +153,22 @@ Route::get('/pertanyaan/{id}/edit-pertanyaan', [TesPreferensiController::class, 
 Route::post('/pertanyaan/{id}/edit-pertanyaanproses', [TesPreferensiController::class, 'editPertanyaanProses'])->name('edit-pertanyaanproses');
 Route::get('/pertanyaan/{id}/hapus-pertanyaan', [TesPreferensiController::class, 'hapusPertanyaan'])->name('hapus-pertanyaan');
 Route::get('/pertanyaan/cari-pertanyaan', [TesPreferensiController::class, 'caripertanyaan'])->name('/pertanyaan/cari-pertanyaan');
+Route::get('/pertanyaan/jawaban', [TesPreferensiController::class, 'jawaban'])->name('/pertanyaan/jawaban');
 //pertanyaan end
+
+// user
+Route::get('/userview', [UserController::class, 'user'])->name('userview');
+// user end
+
+// Route::get('/pertanyaan', [PertanyaanController::class, 'index'])->name('pertanyaan');
+// Route::get('/pertanyaan/add', [PertanyaanController::class, 'addpertanyaan'])->name('add-pertanyaan');
+// Route::post('/pertanyaan/process-add-pertanyaan', [PertanyaanController::class, 'processAddpertanyaan'])->name('process-add-pertanyaan');
+// Route::get('/pertanyaan/edit/{user_id}', [PertanyaanController::class, 'editpertanyaan'])->name('edit-pertanyaan');
+// Route::post('/pertanyaan/process-edit-pertanyaan', [PertanyaanController::class, 'processEditpertanyaan'])->name('process-edit-pertanyaan');
+// Route::get('/pertanyaan/delete-pertanyaan/{user_id}', [PertanyaanController::class, 'deletepertanyaan'])->name('delete-pertanyaan');
+// Route::get('/pertanyaan/change-password/{user_id}  ', [PertanyaanController::class, 'changePassword'])->name('change-password');
+// Route::post('/pertanyaan/process-change-password', [PertanyaanController::class, 'processChangePassword'])->name('process-change-password');
+
 
 //tipe user start
 Route::get('/user', [TesPreferensiController::class, 'user'])->name('user');
@@ -206,17 +235,10 @@ Route::get('/tesist', [DataPreferensiController::class, 'tesist'])->name('tesist
 Route::post('/tesist-prosestambah', [DataPreferensiController::class, 'prosestambahtesist'])->name('tesist-prosestambah');
 //tes ist end
 
-// //usergroup start
-// Route::get('/setusergroup', [DataPreferensiController::class, 'setusergroup'])->name('setusergroup');
-// Route::get('/setusergroup-tambah', [DataPreferensiController::class, 'tambahsetusergroup'])->name('tambah-setusergroup');
-// Route::post('/setusergroup-prosestambah', [DataPreferensiController::class, 'prosestambahsetusergroup'])->name('setusergroup-prosestambah');
-// Route::get('/setusergroup/{id}/edit-setusergroup', [DataPreferensiController::class, 'editsetusergroup'])->name('edit-setusergroup');
-// Route::post('/setusergroup/{id}/edit-setusergroupproses', [DataPreferensiController::class, 'editsetusergroupproses'])->name('edit-setusergroupproses');
-// Route::get('/setusergroup/{id}/hapus-setusergroup', [DataPreferensiController::class, 'hapussetusergroup'])->name('hapus-setusergroup');
-// Route::get('/setusergroup/cari-setusergroup', [DataPreferensiController::class, 'carisetusergroup'])->name('/setusergroup/cari-setusergroup');
-// //usergroup end
+
 // route profile
 Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profile');
+// route profile end
 
 Route::post('/trans-service-requisition/filter', [TransServiceRequisitionController::class, 'filter'])->name('filter-service-requisition');
 Route::get('/trans-service-requisition/add/{service_requisition_id}', [TransServiceRequisitionController::class, 'addTransServiceRequisition'])->name('add-service-requisition');
@@ -231,7 +253,7 @@ Route::post('/trans-service-requisition/process-document-requisition', [TransSer
 Route::get('/trans-service-requisition/download-term/{id1}/{id2}', [TransServiceRequisitionController::class, 'downloadTransServiceRequisitionTerm'])->name('download-term-service-requisition');
 Route::get('/trans-service-requisition/print/{service_requisition_id}', [TransServiceRequisitionController::class, 'print'])->name('print-service-requisition');
 Route::get('/trans-service-disposition/addnormaist', [TransServiceDispositionController::class, 'addnormaist'])->name('search-service-disposition');
-Route::get('/trans-service-disposition/search', [TransServiceDispositionController::class, 'search'])->name('search-service-disposition');
+// Route::get('/trans-service-disposition/search', [TransServiceDispositionController::class, 'search'])->name('search-service-disposition');
 Route::post('/trans-service-disposition/filter', [TransServiceDispositionController::class, 'filter'])->name('filter-service-disposition');
 Route::get('/trans-service-disposition/add/{service_requisition_id}', [TransServiceDispositionController::class, 'addTransServiceDisposition'])->name('add-service-disposition');
 Route::get('/trans-service-disposition/detail/{service_requisition_id}', [TransServiceDispositionController::class, 'detailTransServiceDisposition'])->name('detail-service-disposition');
@@ -260,7 +282,7 @@ Route::get('/trans-service-disposition-approval/download-term/{id1}/{id2}', [Tra
 Route::post('/trans-service-disposition-approval/process-disapprove', [TransServiceDispositionApprovalController::class, 'processDisapproveTransServiceDispositionApproval'])->name('process-disapprove-service-disposition-approval');
 Route::get('/trans-service-disposition-approval/process-funds-received/{id}', [TransServiceDispositionApprovalController::class, 'processFundsReceived'])->name('process-funds-received-service-disposition-approval');
 
-Route::get('/gesamt', [TransServiceDispositionReviewController::class, 'index'])->name('gesamt');
+
 
 
 Route::get('/trans-service-disposition-review/search', [TransServiceDispositionReviewController::class, 'search'])->name('search-service-disposition-review');

@@ -4,18 +4,32 @@
 
 @section('title', 'SMArT Baznas Sragen')
 
+@section('js')
+
+@stop
+
 @section('content_header')
 
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url('home') }}">Beranda</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edukasi</li>
+        </ol>
+    </nav>
 
 @stop
 
 @section('content')
 
     <h3 class="page-title">
-        <b>Edukasi</b> <small>Mengelola Edukasi</small>
+        <b>Daftar Edukasi</b> <small>Mengelola Edukasi</small>
     </h3>
     <br />
+    @if (session('msg'))
+        <div class="alert alert-info" role="alert">
+            {{ session('msg') }}
+        </div>
+    @endif
     <div class="card border border-dark">
         <div class="card-header bg-dark clearfix">
             <h5 class="mb-0 float-left">
@@ -23,36 +37,30 @@
             </h5>
             <div class="form-actions float-right">
                 <button onclick="location.href='{{ url('edukasi-tambah') }}'" name="Find" class="btn btn-sm btn-info"
-                    title="Add Data"><i class="fa fa-plus"></i> Tambah Pengguna Baru</button>
+                    title="Add Data"><i class="fa fa-plus"></i> Tambah
+                    Edukasi</button>
             </div>
         </div>
-
         <div class="card-body">
-            <div class="form-actions float-right">
-                <form action="/edukasi/cari-edukasi" method="GET">
-                    <input type="text" name="cari" placeholder="Nama Edukasi" value="{{ old('cari') }}">
-                    <input type="submit" value="CARI">
-                </form><br>
-            </div>
             <div class="table-responsive">
-                <table id="table-ist" style="width:100%"
+                <table id="example" style="width:100%"
                     class="table table-striped table-bordered table-hover table-full-width">
                     <thead>
                         <tr>
-                            <th width="10%" style='text-align:center'>No</th>
+                            <th width="1%" style='text-align:center'>No</th>
                             <th width="15%" style='text-align:center'>Nama Edukasi</th>
-                            <th width="5%" style='text-align:center'>Aksi</th>
+                            <th width="10%" style='text-align:center'>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="listEdu">
-                        @foreach ($tb_edukasi as $a)
+                    <tbody id="listPertanyaan">
+                        @foreach ($core_education as $a)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $a->namaedukasi }}</td>
+                                <td>{{ $a->education_name }}</td>
                                 <td>
-                                    <a href="/edukasi/{{ $a->id }}/edit-edukasi/"
+                                    <a href="/edukasi/{{ $a->education_id }}/edit-edukasi"
                                         class="btn btn-outline-warning btn-sm">Edit</a>
-                                    <a href="/edukasi/{{ $a->id }}/hapus-edukasi/"
+                                    <a href="/edukasi/{{ $a->education_id }}/hapus-edukasi"
                                         class="btn btn-outline-danger btn-sm">Hapus</a>
                                 </td>
                             </tr>
@@ -65,7 +73,7 @@
     </div>
 
     <script>
-        $('#listEdu').html(html);
+        $('#listPertanyaan').html(html);
         $('#table-ist').DataTable();
     </script>
 @stop
@@ -75,9 +83,5 @@
 @stop
 
 @section('css')
-
-@stop
-
-@section('js')
 
 @stop

@@ -22,6 +22,11 @@ class SystemUserGroup extends Model
         'user_group_name',
     ];
 
+    public function SystemUser()
+    {
+        return $this->hasMany(SystemUser::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

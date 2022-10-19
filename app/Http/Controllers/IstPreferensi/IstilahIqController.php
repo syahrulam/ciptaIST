@@ -47,34 +47,30 @@ class IstilahIqController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(){
-        $getIstIq = DB::table('core_service_parameter')->get();
+        $core_norm_iq =  DB::connection('mysqll')->table('core_norm_iq')->get();
         $return = [
-            'getIstIq'
+            'core_norm_iq'
         ];
-        return view('content/IstilahIQ/IstilahIQ', compact($return));
+        return view('content\IstilahIQ\IstilahIQ', compact($return));
     }
     public function tambahistilahiq()
     {
-        $coreservice = CoreService::where('data_state', 0)
-        ->get();
-
-        return view('content/IstilahIQ/TambahIstilahIQ',compact('coreservice'));
+        return view('content\IstilahIQ\TambahIstilahIQ');
     }
 
     public function addprosesistilahiq(Request $request)
     {
         $request->validate([
-            'iqswmulai'=>'required',
-            'iqswakhir'=>'required',
-            'nilaiiq'=>'required',
-            'presentaseiq'=>'required'
+            'totaliqawal'=>'required',
+            'totaliqakhir'=>'required',
+            'nilaiiq'=>'required'
         ]);
 
-        $query = DB::table('trans_service_requisition')->insert([
-            'service_requisition_no'=>$request->input('iqswmulai'),
-            'service_requisition_name'=>$request->input('iqswakhir'),
-            'delete_remark'=>$request->input('nilaiiq'),
-            'service_requisition_status'=>$request->input('presentaseiq')
+        $query = DB::connection('mysqll')->table('core_norm_iq')->insert([
+            'norm_iq_sw_start'=>$request->input('totaliqawal'),
+            'norm_iq_sw_end'=>$request->input('totaliqakhir'),
+            'norm_iq_value'=>$request->input('nilaiiq'),
+            'norm_iq_percentage'=>$request->input('presentasiiq')
         ]);
 
         if($query){
@@ -85,9 +81,30 @@ class IstilahIqController extends Controller
          }
     }
 
-    public function editistilahiq()
+    public function editistilahiq($id)
     {
-        return view('content\IstilahIq\EditIstilahIq');
+
+        $core_norm_iq = DB::connection('mysqll')->table('core_norm_iq')->where('norm_iq_id',$id)->get();
+        return view('content\IstilahIQ\EditIstilahIq',['core_norm_iq'=>$core_norm_iq]);
+    }
+
+    public function editistilahiqproses(Request $request){
+
+	    DB::connection('mysqll')->table('core_norm_iq')->where('norm_iq_id',$request->id)->update([
+            'norm_iq_sw_start'=>$request->totaliqawal,
+            'norm_iq_sw_end'=>$request->totaliqakhir,
+            'norm_iq_value'=>$request->nilaiiq,
+            'norm_iq_percentage'=>$request->presentasiiq
+	]);
+
+	return redirect('/istilah-iq');
+    }
+
+    public function hapusistilahiq($id)
+    {
+        DB::connection('mysqll')->table('core_norm_iq')->where('norm_iq_id',$id)->delete();
+
+	    return redirect('/istilah-iq');
     }
 
 };

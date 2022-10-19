@@ -50,20 +50,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <a class="text-dark">Kode IST<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="kodeist" id="kodeist"
-                                value="{{ old('kodeist') }}" />
+                            <input class="form-control input-bb" type="text" name="kodeIST" id="kodeIST"
+                                value="{{ old('kodeIST') }}" />
                             <span style="color:red">
-                                @error('kodeist')
+                                @error('kodeIST')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
                         <div class="form-group">
                             <a class="text-dark">Nomor Pertanyaan<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="nopertanyaan" id="nopertanyaan"
-                                value="{{ old('nopertanyaan') }}" />
+                            <input class="form-control input-bb" type="text" name="nomorPertanyaan" id="nomorPertanyaan"
+                                value="{{ old('nomorPertanyaan') }}" />
                             <span style="color:red">
-                                @error('nopertanyaan')
+                                @error('nomorPertanyaan')
                                     {{ $message }}
                                 @enderror
                             </span>
@@ -83,13 +83,7 @@
 
                         <div class="form-group">
                             <a class="text-dark">Komentar Pertanyaan<a class='red'> *</a></a>
-                            <input class="form-control input-bb" type="text" name="komentarpertanyaan"
-                                id="komentarpertanyaan" value="{{ old('komentarpertanyaan') }}" />
-                            <span style="color:red">
-                                @error('komentarpertanyaan')
-                                    {{ $message }}
-                                @enderror
-                            </span>
+                            <input class="form-control input-bb" type="text" name="komentarPertanyaan" />
                         </div>
 
                     </div>

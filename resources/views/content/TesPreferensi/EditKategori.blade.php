@@ -33,14 +33,14 @@
         </div>
 
         <div class="card-body">
-            @foreach ($tb_kategori as $p)
+            @foreach ($core_test_category as $p)
                 <form action="/kategori/{id}/edit-kategoriproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->test_category_id }}"> <br />
                     <div class="form-group">
                         <label for="kategori">Nama Kategori</label>
                         <input type="text" required="required" class="form-control" name="namakategori"
-                            value="{{ $p->namakategori }}">
+                            value="{{ $p->test_category_name }}">
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align  : right !important;">

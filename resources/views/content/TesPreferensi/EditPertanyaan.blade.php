@@ -29,7 +29,7 @@
             @foreach ($tb_pertanyaan as $p)
                 <form action="/pertanyaan/{id}/edit-pertanyaanproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->ID }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
                     <div class="form-group">
                         <label for="kodeIst">Kode IST</label>
                         <input type="text" required="required" class="form-control" name="kodeist"

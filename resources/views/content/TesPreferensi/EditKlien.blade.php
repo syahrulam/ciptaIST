@@ -33,14 +33,34 @@
         </div>
 
         <div class="card-body">
-            @foreach ($tb_klien as $p)
+            @foreach ($core_client as $p)
                 <form action="/klien/{id}/edit-klienproses" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="id" value="{{ $p->id }}"> <br />
+                    <input type="hidden" name="id" value="{{ $p->client_id }}"> <br />
                     <div class="form-group">
                         <label for="klien">Nama Klien</label>
                         <input type="text" required="required" class="form-control" name="namaklien"
-                            value="{{ $p->namaklien }}">
+                            value="{{ $p->client_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="klien">Nomor Telfon Klien 1</label>
+                        <input type="text" required="required" class="form-control" name="nomorklien"
+                            value="{{ $p->client_mobile_phone1 }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="klien">Nomor Telfon Klien 2</label>
+                        <input type="text" required="required" class="form-control" name="nomorkliendua"
+                            value="{{ $p->client_mobile_phone2 }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="klien">Nomor Telfon Rumah Klien</label>
+                        <input type="text" required="required" class="form-control" name="nomorrumah"
+                            value="{{ $p->client_home_phone }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="klien">Nama Yang Dapat Dihubungi</label>
+                        <input type="text" required="required" class="form-control" name="kontakperson"
+                            value="{{ $p->client_contact_person }}">
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="text-align  : right !important;">
